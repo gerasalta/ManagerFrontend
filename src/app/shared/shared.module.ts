@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { MaterialModule } from '../styles/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TableComponent } from './table/table.component';
 
 
 
 @NgModule({
   declarations: [
-    SearchBarComponent
+    SearchBarComponent,
+    TableComponent
   ],
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
   exports:[
-    SearchBarComponent
+    SearchBarComponent,
+    TableComponent
   ]
 })
 export class SharedModule { }
