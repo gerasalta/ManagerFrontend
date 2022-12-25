@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class ClientsComponent {
 
+  constructor(){}
+
+  ngOnInit(){}
+
+  getKeyword(event: Event){
+    console.log(event);
+  }
+
 }
