@@ -1,0 +1,16 @@
+<mat-toolbar color="primary">
+    <button mat-flat-button color="primary">Fc Manager</button>
+    <button mat-flat-button color="primary"><i class="fa-solid fa-user"></i></button>
+</mat-toolbar>
+<mat-sidenav-container class="example-container">
+    <mat-sidenav mode="side" opened>
+        <mat-list role="list">
+            <mat-list-item *ngFor="let route of routes; let i" role="listitem">
+                <button class="side-nav-button" mat-flat-button color="primary" [routerLink]="route.path" >{{route.title}}</button>
+            </mat-list-item>
+          </mat-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>

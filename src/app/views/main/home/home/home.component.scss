@@ -1,0 +1,23 @@
+mat-toolbar{
+    display: flex;
+    justify-content: space-between;
+}
+
+mat-sidenav-container{
+    height: 93.2vh;
+}
+
+mat-sidenav{
+    padding: 1vw;
+    width: 20vw;
+    display: flex;
+}
+
+mat-list-item button{
+    width: 13vw;
+}
+
+mat-list-item{
+    display: flex;
+    flex-direction: column;
+}
