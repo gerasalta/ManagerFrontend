@@ -11,8 +11,8 @@ export class ClientsComponent {
 
   ngOnInit(){}
 
-  getKeyword(event: Event){
-    console.log(event);
+  newItemEvent(value: any){
+    console.log(value);
   }
 
 }

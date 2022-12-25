@@ -16,7 +16,6 @@ export class SearchBarComponent {
   constructor(){}
 
   ngOnInit(){
-    this.emitKeyword()
   }
 
   emitKeyword(){
