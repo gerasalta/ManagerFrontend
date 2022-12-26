@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Client } from 'src/app/interfaces/client.base';
+import { Column } from 'src/app/interfaces/column.base';
 
 @Component({
   selector: 'app-table',
@@ -7,17 +9,30 @@ import { Component } from '@angular/core';
 })
 export class TableComponent {
 
-  public ELEMENT_DATA = [
-    {name: 'Hydrogen', lastName: 1.0079, address: 'H'},
-    {name: 'Hydrogen', lastName: 1.0079, address: 'H'},
-    {name: 'Hydrogen', lastName: 1.0079, address: 'H'}
-  ];
-  displayedColumns: string[] = ['Nombre', 'Apellido', 'Direccion'];
-  dataSource = this.ELEMENT_DATA;
+  @Input() clientData: Client[] = [];
+  public dataSource: Client[] = [];
 
+  public displayedColumns: Column[] = [
+    {title: 'Nombre', property: 'name'},
+    {title: 'Apellido', property: 'lastName'},
+    {title: 'Direccion', property: 'address'},
+    {title: 'Telefono', property: 'phone'},
+    {title: 'Empresa', property: 'company'}
+  ];
+  
   constructor(){}
 
-  ngOnInit(){}
+  ngOnInit(){
+    this.getClients()
+  }
+
+  getColumnsTitles(){
+    return this.displayedColumns.map(r=>r.title)
+  }
+
+  getClients(){
+    this.dataSource = this.clientData
+  }
 
 
 }

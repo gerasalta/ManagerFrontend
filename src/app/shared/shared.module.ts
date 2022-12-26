@@ -5,8 +5,6 @@ import { MaterialModule } from '../styles/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableComponent } from './table/table.component';
 
-
-
 @NgModule({
   declarations: [
     SearchBarComponent,
