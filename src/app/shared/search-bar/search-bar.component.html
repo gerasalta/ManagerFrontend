@@ -1,7 +1,7 @@
-<form class="container">
+<div class="container">
     <mat-form-field>
-      <input class="search-input" placeholder="Buscar" matInput [formControl]="keyword">
-      <button type="button" mat-button matSuffix (click)="emitKeyword()" ><mat-icon><i class="fa-solid fa-magnifying-glass"></i></mat-icon></button>
+      <input class="search-input" placeholder="Buscar" matInput [formControl]="keyword" (keyup.enter)="sendKeyword()">
+      <button class="button-clear" *ngIf="keyword.value" type="button" matSuffix (click)="clearFilters()" ><mat-icon><i class="fa-solid fa-trash"></i></mat-icon></button>
     </mat-form-field>
-</form>
+  </div>
    

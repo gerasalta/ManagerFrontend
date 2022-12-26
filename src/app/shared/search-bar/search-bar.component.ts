@@ -16,10 +16,18 @@ export class SearchBarComponent {
   constructor(){}
 
   ngOnInit(){
+    this.sendKeyword()
   }
 
-  emitKeyword(){
-    this.newItemEvent.emit(this.keyword.value)
+  sendKeyword(){
+      this.keyword.valueChanges
+      .subscribe(()=>{
+        this.newItemEvent.emit(this.keyword.value)
+      })
+  }
+
+  clearFilters(){
+    this.keyword.setValue('')
   }
 
 }

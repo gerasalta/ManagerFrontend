@@ -10,5 +10,18 @@ mat-form-field{
 }
 
 .mat-icon{
-    margin-right: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fa-solid{
+    color: grey;
+    font-size: 17px;
+}
+
+.button-clear{
+    margin-right: 0.7vw;
+    border: none;
+    cursor: pointer;
 }
