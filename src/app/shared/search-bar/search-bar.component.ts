@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-bar',
@@ -11,7 +12,7 @@ export class SearchBarComponent {
 
   public keyword: FormControl = new FormControl('')
 
-  @Output() newItemEvent = new EventEmitter<string>();
+  @Output() searchEvent = new EventEmitter<string>();
 
   constructor(){}
 
@@ -21,8 +22,9 @@ export class SearchBarComponent {
 
   sendKeyword(){
       this.keyword.valueChanges
-      .subscribe(()=>{
-        this.newItemEvent.emit(this.keyword.value)
+      .pipe(debounceTime(200))
+      .subscribe((r)=>{
+        this.searchEvent.emit(r)
       })
   }
 

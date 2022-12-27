@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { Client } from 'src/app/interfaces/client.base';
 import { Column } from 'src/app/interfaces/column.base';
 
@@ -11,29 +12,41 @@ export class TableComponent {
 
   @Input() clientData: Client[] = [];
   @Input() columnData: Column[] = [];
+  @Input() paginatorOptions: any;
+  @Output() pageIndexEvent = new EventEmitter<any>
   public dataSource: Client[] = [];
   public displayedColumns: Column[] = [];
-  
-  constructor(){}
+  public pageEvent;
+  /**
+ * @title Paginator
+ */
 
-  ngOnInit(){
+
+  constructor() { }
+
+  ngOnInit() {
   }
-  
-  ngOnChanges(){
+
+  ngOnChanges() {
     this.getColumn()
     this.getClients()
   }
 
-  getColumnsTitles(){
-    return this.displayedColumns.map(r=>r.title)
+  getColumnsTitles() {
+    return this.displayedColumns.map(r => r.title)
   }
 
-  getClients(){
+  getClients() {
     this.dataSource = this.clientData
   }
 
-  getColumn(){
+  getColumn() {
     this.displayedColumns = this.columnData
   }
+
+  getPage(event?: PageEvent) {
+    this.pageIndexEvent.emit(event)
+  }
+
 
 }

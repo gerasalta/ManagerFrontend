@@ -10,4 +10,10 @@
 
 </table>
 
-<mat-paginator [length]="100" [pageSize]="10" [hidePageSize]="true" aria-label="Select page"></mat-paginator>
+<mat-paginator 
+[length]="paginatorOptions.totalDocs"
+[pageSize]="paginatorOptions.pageSize"
+[hidePageSize] = "true"
+aria-label="Select page"
+(page)="pageEvent = getPage($event)">
+</mat-paginator>

@@ -1,2 +1,2 @@
-<app-search-bar (newItemEvent)="newItemEvent($event)"></app-search-bar>
-<app-table [clientData]="clientData" [columnData]="columnData" ></app-table>
+<app-search-bar (searchEvent)="searchEvent($event)"></app-search-bar>
+<app-table (pageIndexEvent)="pageIndexEvent($event)" [clientData]="clientData" [columnData]="columnData" [paginatorOptions]="paginatorOptions" ></app-table>
