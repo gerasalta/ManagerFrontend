@@ -12,15 +12,11 @@ export class TableComponent {
 
   @Input() clientData: Client[] = [];
   @Input() columnData: Column[] = [];
-  @Input() paginatorOptions: any;
+  @Input() totalDocs: number;
   @Output() pageIndexEvent = new EventEmitter<any>
   public dataSource: Client[] = [];
   public displayedColumns: Column[] = [];
   public pageEvent;
-  /**
- * @title Paginator
- */
-
 
   constructor() { }
 
@@ -45,6 +41,7 @@ export class TableComponent {
   }
 
   getPage(event?: PageEvent) {
+    event.pageIndex += 1
     this.pageIndexEvent.emit(event)
   }
 

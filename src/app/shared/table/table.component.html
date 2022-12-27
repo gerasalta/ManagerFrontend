@@ -11,9 +11,8 @@
 </table>
 
 <mat-paginator 
-[length]="paginatorOptions.totalDocs"
-[pageSize]="paginatorOptions.pageSize"
-[hidePageSize] = "true"
+[length]="totalDocs"
+[pageSize]="12"
 aria-label="Select page"
 (page)="pageEvent = getPage($event)">
 </mat-paginator>

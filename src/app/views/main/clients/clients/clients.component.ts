@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { PAGINATOR_OPTIONS } from 'src/app/constants/paginator-options.clients';
 import { Client } from 'src/app/interfaces/client.base';
 import { Column } from 'src/app/interfaces/column.base';
 import { ClientsService } from 'src/app/services/clients/clients.service';
@@ -14,9 +13,7 @@ export class ClientsComponent {
 
   public clientData: Client[] = []
   public columnData: Column[] = this.setColumns()
-  public paginatorOptions: any = {
-    pageSize: PAGINATOR_OPTIONS.pageSize
-  }
+  public totalDocs: number;
 
   constructor(
     private _clientService: ClientsService
@@ -27,9 +24,9 @@ export class ClientsComponent {
   }
 
   getAllClients(keyword?: string, pageIndex?: number){
-    this._clientService.getAll(keyword, pageIndex, this.paginatorOptions.pageSize)
+    this._clientService.getAll(keyword, pageIndex)
     .subscribe({
-      next: (r: any) => {this.clientData = r.docs; this.paginatorOptions.totalDocs = r.totalDocs}
+      next: (r: any) => {this.clientData = r.docs; this.totalDocs = r.totalDocs}
     })
   }
 
@@ -48,7 +45,6 @@ export class ClientsComponent {
   }
 
   pageIndexEvent(value: any){
-    console.log(value)
     this.getAllClients('', value.pageIndex)
   }
 
