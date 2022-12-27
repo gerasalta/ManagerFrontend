@@ -10,19 +10,17 @@ import { Column } from 'src/app/interfaces/column.base';
 export class TableComponent {
 
   @Input() clientData: Client[] = [];
+  @Input() columnData: Column[] = [];
   public dataSource: Client[] = [];
-
-  public displayedColumns: Column[] = [
-    {title: 'Nombre', property: 'name'},
-    {title: 'Apellido', property: 'lastName'},
-    {title: 'Direccion', property: 'address'},
-    {title: 'Telefono', property: 'phone'},
-    {title: 'Empresa', property: 'company'}
-  ];
+  public displayedColumns: Column[] = [];
   
   constructor(){}
 
   ngOnInit(){
+  }
+  
+  ngOnChanges(){
+    this.getColumn()
     this.getClients()
   }
 
@@ -34,5 +32,8 @@ export class TableComponent {
     this.dataSource = this.clientData
   }
 
+  getColumn(){
+    this.displayedColumns = this.columnData
+  }
 
 }

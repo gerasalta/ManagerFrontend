@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainModule } from './views/main/main.module';
 import { MaterialModule } from './styles/material/material.module';
 import { SharedModule } from './shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
     MainModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Client } from 'src/app/interfaces/client.base';
+import { Column } from 'src/app/interfaces/column.base';
+import { ClientsService } from 'src/app/services/clients/clients.service';
 
 @Component({
   selector: 'app-clients',
@@ -8,34 +10,30 @@ import { Client } from 'src/app/interfaces/client.base';
 })
 export class ClientsComponent {
 
-  public clientData: Client[] = [
-    {
-    _id: "635419f0a29509a5afe19367",
-    name: "paton",
-    lastName: "miranda",
-    phone: "3875335060",
-    address: "none",
-    company: "fc grafica",
-    createdAt: "2022-10-22T16:27:28.029Z",
-    updatedAt: "2022-10-23T04:52:44.779Z",
-    __v: 0
-  },
-    {
-    _id: "635419f0a29509a5afe19322",
-    name: "gera",
-    lastName: "gutierrez",
-    phone: "3875335055",
-    address: "none",
-    company: "fc grafica",
-    createdAt: "2022-10-22T16:27:28.029Z",
-    updatedAt: "2022-10-23T04:52:44.779Z",
-    __v: 0
+  public clientData: Client[] = []
+
+  public columnData: Column[] = [
+    {title: 'Nombre', property: 'name'},
+    {title: 'Apellido', property: 'lastName'},
+    {title: 'Direccion', property: 'address'},
+    {title: 'Telefono', property: 'phone'},
+    {title: 'Empresa', property: 'company'}
+  ]
+
+  constructor(
+    private _clientService: ClientsService
+  ){}
+
+  ngOnInit(){
+    this.getAllClients()
   }
-]
 
-  constructor(){}
-
-  ngOnInit(){}
+  getAllClients(){
+    this._clientService.getAll()
+    .subscribe({
+      next: (r: any) => {this.clientData = r.docs}
+    })
+  }
 
   newItemEvent(value: any){
     console.log(value);
