@@ -12,7 +12,8 @@
 
 <mat-paginator 
 [length]="totalDocs"
-[pageSize]="12"
+[pageSize]="pageSize"
+[hidePageSize]="true"
 aria-label="Select page"
 (page)="pageEvent = getPage($event)">
 </mat-paginator>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PAGINTATOR_DEFAULT } from 'src/app/constants/paginator.default';
 import { Client } from 'src/app/interfaces/client.base';
 import { Column } from 'src/app/interfaces/column.base';
 import { ClientsService } from 'src/app/services/clients/clients.service';
@@ -14,6 +15,7 @@ export class ClientsComponent {
   public clientData: Client[] = []
   public columnData: Column[] = this.setColumns()
   public totalDocs: number;
+  public pageSize = PAGINTATOR_DEFAULT.pageSize
 
   constructor(
     private _clientService: ClientsService
@@ -24,7 +26,7 @@ export class ClientsComponent {
   }
 
   getAllClients(keyword?: string, pageIndex?: number){
-    this._clientService.getAll(keyword, pageIndex)
+    this._clientService.getAll(keyword, pageIndex, this.pageSize)
     .subscribe({
       next: (r: any) => {this.clientData = r.docs; this.totalDocs = r.totalDocs}
     })

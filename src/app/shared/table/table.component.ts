@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { PAGINTATOR_DEFAULT } from 'src/app/constants/paginator.default';
 import { Client } from 'src/app/interfaces/client.base';
 import { Column } from 'src/app/interfaces/column.base';
 
@@ -17,6 +18,7 @@ export class TableComponent {
   public dataSource: Client[] = [];
   public displayedColumns: Column[] = [];
   public pageEvent;
+  public pageSize = PAGINTATOR_DEFAULT.pageSize
 
   constructor() { }
 

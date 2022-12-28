@@ -1,3 +1,16 @@
 table{
     margin-top: 0.2vh;
 }
+
+.mat-mdc-paginator{
+    display: flex;
+    justify-content: center;
+}
+
+mat-paginator ::ng-deep .mat-mdc-paginator-range-label{
+    display: none;
+}
+
+mat-paginator ::ng-deep .mat-mdc-paginator-range-label{
+    display: none;
+}

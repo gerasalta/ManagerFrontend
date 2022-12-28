@@ -13,10 +13,11 @@ export class ClientsService {
     private http: HttpClient
   ) {}
 
-  getAll(keyword?: string, pageIndex?: number){
+  getAll(keyword?: string, pageIndex?: number, pageSize?: number){
     let keywordQuery = keyword ? `keyword=${keyword}` : ''
     let pageQuery = pageIndex ? `&pageIndex=${pageIndex}` : ''
-    return this.http.get(`${this.url}/clients?${keywordQuery}${pageQuery}`)
+    let pageSizeQuery = pageSize ? `&limit=${pageSize}` : ''
+    return this.http.get(`${this.url}/clients?${keywordQuery}${pageQuery}${pageSizeQuery}`)
   }
 
 
