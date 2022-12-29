@@ -14,15 +14,22 @@ export class TableComponent {
   @Input() clientData: Client[] = [];
   @Input() columnData: Column[] = [];
   @Input() totalDocs: number;
+  @Input() actionsButtons: any;
   @Output() pageIndexEvent = new EventEmitter<any>
   public dataSource: Client[] = [];
   public displayedColumns: Column[] = [];
   public pageEvent;
   public pageSize = PAGINTATOR_DEFAULT.pageSize
+  public showMenu: boolean = false;
+
+  /**
+ * @title Basic menu
+ */
 
   constructor() { }
 
   ngOnInit() {
+   this.addActionsButtons()
   }
 
   ngOnChanges() {
@@ -33,19 +40,29 @@ export class TableComponent {
   getColumnsTitles() {
     return this.displayedColumns.map(r => r.title)
   }
-
+  
   getClients() {
     this.dataSource = this.clientData
   }
-
+  
   getColumn() {
     this.displayedColumns = this.columnData
   }
+
 
   getPage(event?: PageEvent) {
     event.pageIndex += 1
     this.pageIndexEvent.emit(event)
   }
 
+  addActionsButtons(){
+    if(this.actionsButtons && this.actionsButtons.length){
+      this.columnData.push({title: 'Acciones', property: null})
+      this.showMenu = true
+    }else{
+      return
+    }
+
+  }
 
 }

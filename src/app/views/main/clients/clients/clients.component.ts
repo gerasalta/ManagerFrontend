@@ -14,7 +14,8 @@ export class ClientsComponent {
 
   public clientData: Client[] = []
   public columnData: Column[] = this.setColumns()
-  public totalDocs: number;
+  public actionsButtons: any = [];
+  public totalDocs: number = 10;
   public pageSize = PAGINTATOR_DEFAULT.pageSize
 
   constructor(
@@ -23,12 +24,16 @@ export class ClientsComponent {
 
   ngOnInit(){
     this.getAllClients()
+    this.setActionsButtons()
   }
 
   getAllClients(keyword?: string, pageIndex?: number){
     this._clientService.getAll(keyword, pageIndex, this.pageSize)
     .subscribe({
-      next: (r: any) => {this.clientData = r.docs; this.totalDocs = r.totalDocs}
+      next: (r: any) => {
+        this.clientData = r.docs;
+        this.totalDocs = r.totalDocs;
+      }
     })
   }
 
@@ -48,6 +53,13 @@ export class ClientsComponent {
 
   pageIndexEvent(value: any){
     this.getAllClients('', value.pageIndex)
+  }
+
+  setActionsButtons(){
+    this.actionsButtons =  [
+      {name: 'Ver', fn: console.log('DetailsDialog')},
+      {name: 'Eliminar', fn: console.log('DeleteDialog')},
+    ]
   }
 
 }
