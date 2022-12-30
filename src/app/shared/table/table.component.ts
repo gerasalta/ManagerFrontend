@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { PAGINTATOR_DEFAULT } from 'src/app/constants/paginator.default';
+import { ActionButtons } from 'src/app/interfaces/actions.table';
 import { Client } from 'src/app/interfaces/client.base';
 import { Column } from 'src/app/interfaces/column.base';
 
@@ -11,20 +12,15 @@ import { Column } from 'src/app/interfaces/column.base';
 })
 export class TableComponent {
 
-  @Input() clientData: Client[] = [];
+  @Input() data = [];
   @Input() columnData: Column[] = [];
   @Input() totalDocs: number;
-  @Input() actionsButtons: any;
+  @Input() actionsButtons: ActionButtons[] = [];
   @Output() pageIndexEvent = new EventEmitter<any>
-  public dataSource: Client[] = [];
+  public dataSource = [];
   public displayedColumns: Column[] = [];
   public pageEvent;
   public pageSize = PAGINTATOR_DEFAULT.pageSize
-  public showMenu: boolean = false;
-
-  /**
- * @title Basic menu
- */
 
   constructor() { }
 
@@ -37,18 +33,21 @@ export class TableComponent {
     this.getClients()
   }
 
+  ngAfterViewInit(){
+    
+  }
+
   getColumnsTitles() {
     return this.displayedColumns.map(r => r.title)
   }
   
   getClients() {
-    this.dataSource = this.clientData
+    this.dataSource = this.data
   }
   
   getColumn() {
     this.displayedColumns = this.columnData
   }
-
 
   getPage(event?: PageEvent) {
     event.pageIndex += 1
@@ -58,7 +57,6 @@ export class TableComponent {
   addActionsButtons(){
     if(this.actionsButtons && this.actionsButtons.length){
       this.columnData.push({title: 'Acciones', property: null})
-      this.showMenu = true
     }else{
       return
     }

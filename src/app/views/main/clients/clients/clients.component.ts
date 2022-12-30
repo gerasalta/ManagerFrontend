@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { PAGINTATOR_DEFAULT } from 'src/app/constants/paginator.default';
+import { ActionButtons } from 'src/app/interfaces/actions.table';
 import { Client } from 'src/app/interfaces/client.base';
 import { Column } from 'src/app/interfaces/column.base';
 import { ClientsService } from 'src/app/services/clients/clients.service';
@@ -12,9 +13,9 @@ import { ClientsService } from 'src/app/services/clients/clients.service';
 
 export class ClientsComponent {
 
-  public clientData: Client[] = []
+  public data: Client[] = []
   public columnData: Column[] = this.setColumns()
-  public actionsButtons: any = [];
+  public actionsButtons: ActionButtons[] = [];
   public totalDocs: number = 10;
   public pageSize = PAGINTATOR_DEFAULT.pageSize
 
@@ -31,7 +32,7 @@ export class ClientsComponent {
     this._clientService.getAll(keyword, pageIndex, this.pageSize)
     .subscribe({
       next: (r: any) => {
-        this.clientData = r.docs;
+        this.data = r.docs;
         this.totalDocs = r.totalDocs;
       }
     })
@@ -55,10 +56,18 @@ export class ClientsComponent {
     this.getAllClients('', value.pageIndex)
   }
 
-  setActionsButtons(){
-    this.actionsButtons =  [
-      {name: 'Ver', fn: console.log('DetailsDialog')},
-      {name: 'Eliminar', fn: console.log('DeleteDialog')},
+  showClientDetails(){
+    console.log('Client Details');
+  }
+
+  showDeletedialog(){
+    console.log('Delete Dialog');
+  }
+
+  public setActionsButtons(): void{
+    this.actionsButtons = [
+      {name: 'Ver', fn: this.showClientDetails},
+      {name: 'Eliminar', fn: this.showDeletedialog},
     ]
   }
 

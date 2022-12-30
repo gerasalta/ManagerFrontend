@@ -14,3 +14,16 @@ mat-paginator ::ng-deep .mat-mdc-paginator-range-label{
 mat-paginator ::ng-deep .mat-mdc-paginator-range-label{
     display: none;
 }
+
+.mat-mdc-card{
+    box-shadow: 0px 0px 0px 0px;
+}
+
+.mat-mdc-card-content:last-child{
+    padding: 0px;
+}
+
+mat-card-content{
+    align-self: center;
+    color: rgb(197, 197, 197);
+}
