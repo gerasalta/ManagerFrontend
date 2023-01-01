@@ -1,14 +1,19 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { PAGINTATOR_DEFAULT } from 'src/app/constants/paginator.default';
 import { ActionButtons } from 'src/app/interfaces/actions.table';
 import { Client } from 'src/app/interfaces/client.base';
 import { Column } from 'src/app/interfaces/column.base';
 import { ClientsService } from 'src/app/services/clients/clients.service';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
+import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.scss']
+  styleUrls: ['./clients.component.scss'],
+  providers: [MatDialog]
 })
 
 export class ClientsComponent {
@@ -20,7 +25,9 @@ export class ClientsComponent {
   public pageSize = PAGINTATOR_DEFAULT.pageSize
 
   constructor(
-    private _clientService: ClientsService
+    public _dialog: MatDialog,
+    public _clientService: ClientsService,
+    public _snackBar: MatSnackBar
   ){}
 
   ngOnInit(){
@@ -56,15 +63,33 @@ export class ClientsComponent {
     this.getAllClients('', value.pageIndex)
   }
 
-  showClientDetails(){
+  deleteClient(id: string){
+    this._clientService.delete(id)
+    .subscribe({
+      next: (r: any) => {this._snackBar.openFromComponent(SnackBarComponent, {data: {message: r.message}}); this.getAllClients()},
+      error: e => console.log(e),
+      complete: () => {}
+    })
+  }
+
+  showClientDetails = (id: string) => {
     console.log('Client Details');
   }
 
-  showDeletedialog(){
-    console.log('Delete Dialog');
+  showDeletedialog = (id: string) => {
+    const dialog =this._dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Eliminar Cliente',
+        message: 'Los datos del cliente serán eliminados de forma permanente'
+      }
+    })
+    dialog.afterClosed()
+    .subscribe({
+      next: r => {r === true ? this.deleteClient(id) : null}
+    })
   }
 
-  public setActionsButtons(): void{
+  public setActionsButtons(){
     this.actionsButtons = [
       {name: 'Ver', fn: this.showClientDetails},
       {name: 'Eliminar', fn: this.showDeletedialog},

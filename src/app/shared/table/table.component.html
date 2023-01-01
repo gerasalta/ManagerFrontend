@@ -6,12 +6,14 @@
     </ng-container>
     <ng-container *ngIf="column.property === null">
       <td mat-cell *matCellDef="let element">
-        <button mat-button [matMenuTriggerFor]="menu">
+        <button mat-button [matMenuTriggerFor]="menu" (click)="getElementId(element)">
           <i class="fa-solid fa-ellipsis-vertical"></i>
         </button>
       </td>
       <mat-menu #menu="matMenu">
-        <button *ngFor="let action of actionsButtons" mat-menu-item (click)="action.fn()" >{{action.name}}</button>
+        <ng-container *ngFor="let action of actionsButtons" >
+          <button  mat-menu-item (click)="action.fn(elementId)">{{action.name}}</button>
+        </ng-container>
       </mat-menu>
     </ng-container>
   </ng-container>

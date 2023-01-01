@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { PAGINTATOR_DEFAULT } from 'src/app/constants/paginator.default';
 import { ActionButtons } from 'src/app/interfaces/actions.table';
-import { Client } from 'src/app/interfaces/client.base';
 import { Column } from 'src/app/interfaces/column.base';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-table',
@@ -21,20 +22,19 @@ export class TableComponent {
   public displayedColumns: Column[] = [];
   public pageEvent;
   public pageSize = PAGINTATOR_DEFAULT.pageSize
+  public elementId: string;
 
-  constructor() { }
+  constructor(
+    public _dialog: MatDialog
+  ) { }
 
   ngOnInit() {
    this.addActionsButtons()
+   this.getColumn()
   }
 
   ngOnChanges() {
-    this.getColumn()
     this.getClients()
-  }
-
-  ngAfterViewInit(){
-    
   }
 
   getColumnsTitles() {
@@ -60,7 +60,10 @@ export class TableComponent {
     }else{
       return
     }
+  }
 
+  getElementId(element: any){
+    this.elementId = element._id
   }
 
 }

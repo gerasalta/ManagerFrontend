@@ -1,4 +1,4 @@
 export interface ActionButtons {
     name: string,
-    fn: () => void;
+    fn: (id?: string) => void;
 }

@@ -20,7 +20,8 @@ export class ClientsService {
     return this.http.get(`${this.url}/clients?${keywordQuery}${pageQuery}${pageSizeQuery}`)
   }
 
-
-
+  delete(id:string){
+    return this.http.delete(`${this.url}/clients/${id}`)
+  }
 
 }
