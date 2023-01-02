@@ -6,6 +6,7 @@ import { ActionButtons } from 'src/app/interfaces/actions.table';
 import { Client } from 'src/app/interfaces/client.base';
 import { Column } from 'src/app/interfaces/column.base';
 import { ClientsService } from 'src/app/services/clients/clients.service';
+import { LoadingService } from 'src/app/services/loading/loading.service';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
 
@@ -27,7 +28,8 @@ export class ClientsComponent {
   constructor(
     public _dialog: MatDialog,
     public _clientService: ClientsService,
-    public _snackBar: MatSnackBar
+    public _snackBar: MatSnackBar,
+    public _loading: LoadingService
   ){}
 
   ngOnInit(){
@@ -38,10 +40,7 @@ export class ClientsComponent {
   getAllClients(keyword?: string, pageIndex?: number){
     this._clientService.getAll(keyword, pageIndex, this.pageSize)
     .subscribe({
-      next: (r: any) => {
-        this.data = r.docs;
-        this.totalDocs = r.totalDocs;
-      }
+      next: (r: any) => { this.data = r.docs; this.totalDocs = r.totalDocs; }
     })
   }
 
@@ -64,11 +63,12 @@ export class ClientsComponent {
   }
 
   deleteClient(id: string){
+    this._loading.open()
     this._clientService.delete(id)
     .subscribe({
       next: (r: any) => {this._snackBar.openFromComponent(SnackBarComponent, {data: {message: r.message}}); this.getAllClients()},
       error: e => console.log(e),
-      complete: () => {}
+      complete: () => { this._loading.close() }
     })
   }
 

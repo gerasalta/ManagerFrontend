@@ -8,13 +8,15 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { matSnackbarDefaultConfig } from '../constants/snack-bar.config';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
     SearchBarComponent,
     TableComponent,
     ConfirmDialogComponent,
-    SnackBarComponent
+    SnackBarComponent,
+    LoadingComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,9 @@ import { matSnackbarDefaultConfig } from '../constants/snack-bar.config';
   exports:[
     SearchBarComponent,
     TableComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    SnackBarComponent,
+    LoadingComponent
   ],
   providers: [
     {
