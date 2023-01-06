@@ -22,6 +22,7 @@ export class ClientsComponent {
   public data: Client[] = []
   public columnData: Column[] = this.setColumns()
   public actionsButtons: ActionButtons[] = [];
+  public searchButtons: ActionButtons[] = [];
   public totalDocs: number = 10;
   public pageSize = PAGINTATOR_DEFAULT.pageSize
 
@@ -35,12 +36,15 @@ export class ClientsComponent {
   ngOnInit(){
     this.getAllClients()
     this.setActionsButtons()
+    this.setSearchButton()
   }
 
   getAllClients(keyword?: string, pageIndex?: number){
+    this._loading.open()
     this._clientService.getAll(keyword, pageIndex, this.pageSize)
     .subscribe({
-      next: (r: any) => { this.data = r.docs; this.totalDocs = r.totalDocs; }
+      next: (r: any) => { this.data = r.docs; this.totalDocs = r.totalDocs; },
+      complete: () => { this._loading.close() }
     })
   }
 
@@ -72,7 +76,7 @@ export class ClientsComponent {
     })
   }
 
-  showClientDetails = (id: string) => {
+  showEditDialog = (id: string) => {
     console.log('Client Details');
   }
 
@@ -89,10 +93,20 @@ export class ClientsComponent {
     })
   }
 
-  public setActionsButtons(){
+  showNewClientDialog = () =>{
+    console.log('New Client Dialog')
+  }
+
+  setActionsButtons(){
     this.actionsButtons = [
-      {name: 'Ver', fn: this.showClientDetails},
+      {name: 'Editar', fn: this.showEditDialog},
       {name: 'Eliminar', fn: this.showDeletedialog},
+    ]
+  }
+
+  setSearchButton(){
+    this.searchButtons = [
+      {name: 'Nuevo Cliente', fn: this.showNewClientDialog}
     ]
   }
 

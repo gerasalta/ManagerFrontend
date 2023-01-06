@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+import { ActionButtons } from 'src/app/interfaces/actions.table';
 
 @Component({
   selector: 'app-search-bar',
@@ -11,7 +12,7 @@ import { debounceTime } from 'rxjs/operators';
 export class SearchBarComponent {
 
   public keyword: FormControl = new FormControl('')
-
+  @Input() searchButtons: ActionButtons[] = [];
   @Output() searchEvent = new EventEmitter<string>();
 
   constructor(){}

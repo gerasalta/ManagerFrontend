@@ -1,7 +1,12 @@
 <div class="container">
-    <mat-form-field >
+  <div class="buttons-container">
+    <button *ngFor="let button of searchButtons" mat-button color="primary" (click)="button.fn()">Nuevo Cliente</button>
+  </div>
+  <div class="search-bar">
+    <mat-form-field>
       <input  class="search-input" placeholder="Buscar" matInput [formControl]="keyword" (keyup.enter)="sendKeyword()" autofocus>
       <button class="button-clear" *ngIf="keyword.value" type="button" matSuffix (click)="clearFilters()" ><mat-icon><i class="fa-solid fa-trash"></i></mat-icon></button>
     </mat-form-field>
   </div>
-   
+</div>
+  

@@ -3,6 +3,7 @@
     margin-top: 2.4vh;
     display: flex;
     justify-content: center;
+    flex-direction: column;
 }
 
 mat-form-field{
@@ -24,4 +25,14 @@ mat-form-field{
     margin-right: 0.7vw;
     border: none;
     cursor: pointer;
+}
+
+.buttons-container{
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar{
+    display: flex;
+    justify-content: center;
 }

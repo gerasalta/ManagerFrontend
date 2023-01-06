@@ -11,8 +11,8 @@
         </button>
       </td>
       <mat-menu #menu="matMenu">
-        <ng-container *ngFor="let action of actionsButtons" >
-          <button  mat-menu-item (click)="action.fn(elementId)">{{action.name}}</button>
+        <ng-container *ngFor="let button of actionsButtons" >
+          <button  mat-menu-item (click)="button.fn(elementId)">{{button.name}}</button>
         </ng-container>
       </mat-menu>
     </ng-container>
