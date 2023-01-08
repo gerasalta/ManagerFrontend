@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Client } from 'src/app/interfaces/client.base';
 
 
 @Injectable({
@@ -22,6 +23,10 @@ export class ClientsService {
 
   delete(id:string){
     return this.http.delete(`${this.url}/clients/${id}`)
+  }
+
+  post(client: Client){
+    return this.http.post(`${this.url}/clients`, client)
   }
 
 }

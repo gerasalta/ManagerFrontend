@@ -9,6 +9,7 @@ import { ClientsService } from 'src/app/services/clients/clients.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
+import { NewClientDialogComponent } from '../new-client-dialog/new-client-dialog.component';
 
 @Component({
   selector: 'app-clients',
@@ -66,11 +67,21 @@ export class ClientsComponent {
     this.getAllClients('', value.pageIndex)
   }
 
+  createClient(client: Client){
+    this._loading.open()
+    this._clientService.post(client)
+    .subscribe({
+      next: (r: any) => { this._snackBar.open('El cliente ha sido creado con exito'); this.getAllClients() },
+      error: e => { this._snackBar.open(e.error.message)},
+      complete: () => { this._loading.close() }
+    })
+  }
+
   deleteClient(id: string){
     this._loading.open()
     this._clientService.delete(id)
     .subscribe({
-      next: (r: any) => {this._snackBar.openFromComponent(SnackBarComponent, {data: {message: r.message}}); this.getAllClients()},
+      next: (r: any) => {this._snackBar.openFromComponent(SnackBarComponent, {data: {message: 'El cliente ha sido removido con exito'}}); this.getAllClients()},
       error: e => console.log(e),
       complete: () => { this._loading.close() }
     })
@@ -81,7 +92,7 @@ export class ClientsComponent {
   }
 
   showDeletedialog = (id: string) => {
-    const dialog =this._dialog.open(ConfirmDialogComponent, {
+    const dialog = this._dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Eliminar Cliente',
         message: 'Los datos del cliente serán eliminados de forma permanente'
@@ -94,7 +105,11 @@ export class ClientsComponent {
   }
 
   showNewClientDialog = () =>{
-    console.log('New Client Dialog')
+    const dialog = this._dialog.open(NewClientDialogComponent, {disableClose: true})
+    dialog.afterClosed()
+    .subscribe({
+      next: r => {r ? this.createClient(r) : null}
+    })
   }
 
   setActionsButtons(){

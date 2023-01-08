@@ -4,6 +4,6 @@
 </div>
 <hr>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button (click)="onConfirmClick()" >Confirmar</button>
+  <button mat-button color="primary" (click)="closeDialog()">Cancelar</button>
+  <button mat-button color="warn" (click)="onConfirmClick()">{{setConfirmButton()}}</button>
 </div>
