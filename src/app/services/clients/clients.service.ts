@@ -29,4 +29,12 @@ export class ClientsService {
     return this.http.post(`${this.url}/clients`, client)
   }
 
+  getOne(id: string){
+    return this.http.get(`${this.url}/clients/${id}`)
+  }
+
+  update(id: string, client: Client){
+    return this.http.patch(`${this.url}/clients/${id}`, client)
+  }
+
 }

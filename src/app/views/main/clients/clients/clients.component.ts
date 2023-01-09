@@ -77,6 +77,16 @@ export class ClientsComponent {
     })
   }
 
+  updateClient(id: string, client: Client){
+    this._loading.open()
+    this._clientService.update(id, client)
+    .subscribe({
+      next: (r: any) => { this._snackBar.open('El cliente ha sido actualizado con exito'); this.getAllClients() },
+      error: e => { this._snackBar.open(e.error.message)},
+      complete: () => { this._loading.close() }
+    })
+  }
+
   deleteClient(id: string){
     this._loading.open()
     this._clientService.delete(id)
@@ -88,7 +98,11 @@ export class ClientsComponent {
   }
 
   showEditDialog = (id: string) => {
-    console.log('Client Details');
+    const dialog = this._dialog.open(NewClientDialogComponent, {data: {id: id, title: 'Editar Cliente'}})
+    dialog.afterClosed()
+    .subscribe({
+      next: r => r ? this.updateClient(id, r) : null
+    })
   }
 
   showDeletedialog = (id: string) => {
@@ -105,7 +119,7 @@ export class ClientsComponent {
   }
 
   showNewClientDialog = () =>{
-    const dialog = this._dialog.open(NewClientDialogComponent, {disableClose: true})
+    const dialog = this._dialog.open(NewClientDialogComponent, {data: {title: 'Nuevo Cliente'}})
     dialog.afterClosed()
     .subscribe({
       next: r => {r ? this.createClient(r) : null}

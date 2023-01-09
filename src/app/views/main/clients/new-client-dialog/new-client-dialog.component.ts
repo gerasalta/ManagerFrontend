@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Client } from 'src/app/interfaces/client.base';
 import { ClientsService } from 'src/app/services/clients/clients.service';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 
@@ -30,11 +31,16 @@ export class NewClientDialogComponent {
     public dialogRef: MatDialogRef<NewClientDialogComponent>,
     public _clientService: ClientsService,
     public _snackBar: MatSnackBar,
-    public _dialog: MatDialog
+    public _dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
+  ngOnInit() {
+    this.setUpdateValues()
+  }
+
   closeDialog() {
-    if (this.newClient.dirty){
+    if (this.newClient.dirty) {
       const dialog = this._dialog.open(ConfirmDialogComponent, {
         data: {
           title: 'Descartar',
@@ -42,23 +48,36 @@ export class NewClientDialogComponent {
         }
       })
       dialog.afterClosed()
-      .subscribe({
-        next: r => {r === true ?  this._dialog.closeAll() : null}
-      })
-    }else{
+        .subscribe({
+          next: r => { r === true ? this._dialog.closeAll() : null }
+        })
+    } else {
       this._dialog.closeAll()
     }
   }
 
-  sendClient(){
+  sendClient() {
     this._clientService.getAll(this.phoneControl.value)
-    .subscribe((r: any) => {
-      if(r.totalDocs){
-        this._snackBar.open('El numero ya ha sido registrado')
-      }else{
-        this.dialogRef.close(this.newClient.value)
-      }
-    })
+      .subscribe((r: any) => {
+        if (r.totalDocs && r.docs[0]._id !== this.data.id) {
+          this._snackBar.open('Telefono asociado a otro cliente')
+        } else {
+          this.dialogRef.close(this.newClient.value)
+        }
+      })
+  }
+
+  setUpdateValues() {
+    if (this.data.id) {
+      this._clientService.getOne(this.data.id)
+        .subscribe((r: any) => {
+          this.nameControl.setValue(r.data.name)
+          this.lastNameControl.setValue(r.data.lastName)
+          this.phoneControl.setValue(r.data.phone)
+          this.companyControl.setValue(r.data.company)
+          this.addressControl.setValue(r.data.address)
+        })
+    }
   }
 
 }
