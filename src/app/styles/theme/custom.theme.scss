@@ -14,4 +14,4 @@ $my-theme: mat.define-light-theme((
  density: 0,
 ));
 
-@include mat.core-theme($my-theme);
+@include mat.all-component-themes($my-theme);

@@ -17,7 +17,8 @@ export class HomeComponent {
   }
 
   setRoutes(){
-    return MAIN_ROUTES.find(r => r.path === 'home')?.children
+    const routes = MAIN_ROUTES.find(r => r.path === 'home')?.children
+    return routes.filter(r => r.title)
   }
 
 }
