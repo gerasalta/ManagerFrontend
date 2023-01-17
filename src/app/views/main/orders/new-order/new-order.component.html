@@ -19,4 +19,63 @@
             </div>
         </mat-card-content>
     </mat-card>
+    <div class="formgroup" [formGroup]="orderForm">
+        <div class="form-container" formArrayName="orders">
+                <div class="form" *ngFor="let order of ordersControls.controls; let i = index" [formGroupName]="i">
+                    <div class="buttons-container">
+                        <button mat-flat-button color="primary">{{i+1}}</button>
+                        <button id="delete-button" mat-flat-button color="warn" (click)="deleteOrder(i)"  [disabled]="orderForm.get('orders').value.length <= 1" ><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Titulo</mat-label>
+                        <input matInput formControlName="title">
+                        <mat-error *ngIf="order.get('title').hasError('required')" >Campo obligatorio</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Precio</mat-label>
+                        <span matTextPrefix *ngIf="order.get('price').value" >$</span>
+                        <input matInput onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" formControlName="price">
+                        <mat-error  *ngIf="order.get('price').hasError('required')" >Campo obligatorio</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="description" appearance="fill">
+                        <mat-label>Descripción</mat-label>
+                        <input matInput formControlName="description">
+                        <mat-error  *ngIf="order.get('description').hasError('required')" >Campo obligatorio</mat-error>
+                    </mat-form-field>
+                </div>
+            <div class="add-btn-container">
+                <button mat-icon-button color="primary" type="button" (click)="addOrder()"><i class="fa-solid fa-plus"></i></button>
+            </div>
+        </div>
+        <div class="balance-container">
+            <mat-form-field appearance="fill">
+                <mat-label>Subtotal</mat-label>
+                <input matInput [value]="getSubtotal()">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Descuento</mat-label>
+                <span *ngIf="orderForm.get('discount').value"  matTextPrefix >%</span>
+                <input matInput onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" formControlName="discount">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Total</mat-label>
+                <input matInput>
+            </mat-form-field>
+            <ng-container>
+                <mat-form-field appearance="fill">
+                    <mat-label>Adelanto</mat-label>
+                    <span *ngIf="advance.value"  matTextPrefix >$</span>
+                    <input matInput onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" [formControl]="advance">
+                </mat-form-field>
+            </ng-container>
+            <mat-form-field appearance="fill">
+                <mat-label>Balance</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
+        <div class="confirm-btn-container">
+            <button mat-flat-button color="primary" (click)="confirm()" [disabled]="!orderForm.valid">Confirmar</button>
+            <button mat-flat-button color="warn" routerLink="/home/clients">Descartar</button>
+        </div>
+    </div>
 </div>

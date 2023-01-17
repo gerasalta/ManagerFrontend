@@ -1,12 +1,11 @@
 .container{
     margin-top: 3vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    padding-inline: 6vw;
+    height: 89.5vh;
 }
 
 mat-card{
-    width: 90%;
+    width: 100%;
 }
 
 mat-card-content{
@@ -16,4 +15,63 @@ mat-card-content{
 
 .title{
     font-weight: 500;
+}
+
+.form-container{
+    margin-top: 5vh;
+    min-height: 64vh;
+}
+
+.form{
+    display: flex;
+}
+
+.buttons-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.buttons-container button{
+    height: 30%;
+}
+
+.form mat-form-field{
+    margin-left: 1vw;
+}
+
+.form mat-form-field{
+    min-width: 20%;
+}
+
+.description{
+    width: 100%;
+}
+
+#delete-button{
+    margin-top: 1vh;
+}
+
+.add-btn-container{
+    display: flex;
+    justify-content: center;
+}
+
+
+.balance-container mat-form-field{
+    width: 18%;
+}
+
+.balance-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.confirm-btn-container{
+    display: flex;
+    justify-content: center;
+}
+
+.confirm-btn-container button{
+    margin-top: 1vh;
+    margin-inline: 0.5vw;
 }
