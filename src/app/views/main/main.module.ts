@@ -9,9 +9,10 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { NewClientDialogComponent } from './clients/new-client-dialog/new-client-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NewOrderComponent } from './orders/new-order/new-order.component';
+import { ConfirmOrderDialogComponent } from './orders/confirm-order-dialog/confirm-order-dialog.component';
 
 @NgModule({
-  declarations: [HomeComponent, ClientsComponent, OrdersComponent, NewClientDialogComponent, NewOrderComponent],
+  declarations: [HomeComponent, ClientsComponent, OrdersComponent, NewClientDialogComponent, NewOrderComponent, ConfirmOrderDialogComponent],
   imports: [
     CommonModule,
     MaterialModule,

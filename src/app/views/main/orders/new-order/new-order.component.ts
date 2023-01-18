@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { AbstractControl, Form, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'src/app/services/clients/clients.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
+import { ConfirmOrderDialogComponent } from '../confirm-order-dialog/confirm-order-dialog.component';
 
 @Component({
   selector: 'app-new-order',
@@ -18,7 +20,7 @@ export class NewOrderComponent {
   
   public orderForm: FormGroup = new FormGroup ({
     clientID: new FormControl(this.clientId, [Validators.required]),
-    discount: new FormControl(),
+    discount: new FormControl(null, [Validators.max(30)]),
     advances: new FormArray([]),
     orders: new FormArray([]),
   })
@@ -31,7 +33,8 @@ export class NewOrderComponent {
     public _clientService: ClientsService,
     public _loadingService: LoadingService,
     public _snackbarService: MatSnackBar,
-    public router: Router
+    public router: Router,
+    public _dialog: MatDialog
     ){}
 
   ngOnInit(){
@@ -56,13 +59,13 @@ export class NewOrderComponent {
   confirm(){
     this.pushAdvance()
     this.getSubtotal()
-    console.log(this.orderForm.value)
+    this._dialog.open(ConfirmOrderDialogComponent)
   }
 
   pushAdvance(){
     const form = this.orderForm.get('advances') as FormArray
     form.removeAt(0)
-    form.push(new FormGroup({advance: new FormControl(this.advance.value)}))
+    form.push(new FormGroup({advance: new FormControl(this.advance.value, [Validators.required, Validators.min(0)])}))
   }
 
   addPrefix(symbol?: string){
@@ -92,6 +95,19 @@ export class NewOrderComponent {
     this.ordersControls.controls.forEach(r => subtotal += Number(r.get('price').value))
     subtotal === 0 ? subtotal = null : null
     return subtotal
+  }
+
+  getTotal(){
+    let total = this.getSubtotal() * ( (100-this.orderForm.get('discount').value) / 100 )
+    total === 0 ? total = null : null
+    return total
+  }
+
+  getBalance(){
+    this.pushAdvance()
+    let balance = this.getTotal() - this.orderForm.get('advances').value[0].advance
+    balance === 0 ? balance = null : null
+    return balance
   }
 
 }

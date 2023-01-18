@@ -49,17 +49,20 @@
         </div>
         <div class="balance-container">
             <mat-form-field appearance="fill">
+                <span *ngIf="getSubtotal()"  matTextPrefix >$</span>
                 <mat-label>Subtotal</mat-label>
-                <input matInput [value]="getSubtotal()">
+                <input matInput [value]="getSubtotal()" readonly>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Descuento</mat-label>
                 <span *ngIf="orderForm.get('discount').value"  matTextPrefix >%</span>
                 <input matInput onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" formControlName="discount">
+                <mat-error  *ngIf="orderForm.get('discount').hasError('max')">Limite Excedido</mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill">
+                <span *ngIf="getTotal()"  matTextPrefix >$</span>
                 <mat-label>Total</mat-label>
-                <input matInput>
+                <input matInput [value]="getTotal()" readonly>
             </mat-form-field>
             <ng-container>
                 <mat-form-field appearance="fill">
@@ -69,12 +72,13 @@
                 </mat-form-field>
             </ng-container>
             <mat-form-field appearance="fill">
+                <span *ngIf="getBalance()"  matTextPrefix >$</span>
                 <mat-label>Balance</mat-label>
-                <input matInput>
+                <input matInput [value]="getBalance()" readonly>
             </mat-form-field>
         </div>
         <div class="confirm-btn-container">
-            <button mat-flat-button color="primary" (click)="confirm()" [disabled]="!orderForm.valid">Confirmar</button>
+            <button mat-flat-button color="primary" (click)="confirm()">Confirmar</button>
             <button mat-flat-button color="warn" routerLink="/home/clients">Descartar</button>
         </div>
     </div>
