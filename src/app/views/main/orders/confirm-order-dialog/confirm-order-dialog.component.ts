@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -8,12 +9,21 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ConfirmOrderDialogComponent {
 
+  public form: FormGroup = new FormGroup({
+    term: new FormControl('', [Validators.required]),
+    manager: new FormControl('', [Validators.required])
+  })
+
   constructor(
     public dialogRef: MatDialogRef<ConfirmOrderDialogComponent>,
   ){}
 
   close(){
-    this.dialogRef.close()
+    this.dialogRef.close(false)
+  }
+
+  confirm(){
+    this.dialogRef.close(this.form)
   }
 
 }

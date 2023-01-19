@@ -58,6 +58,7 @@
                 <span *ngIf="orderForm.get('discount').value"  matTextPrefix >%</span>
                 <input matInput onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" formControlName="discount">
                 <mat-error  *ngIf="orderForm.get('discount').hasError('max')">Limite Excedido</mat-error>
+                <mat-error  *ngIf="orderForm.get('discount').hasError('required')">Campo obligatorio</mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <span *ngIf="getTotal()"  matTextPrefix >$</span>
@@ -78,7 +79,7 @@
             </mat-form-field>
         </div>
         <div class="confirm-btn-container">
-            <button mat-flat-button color="primary" (click)="confirm()">Confirmar</button>
+            <button mat-flat-button color="primary" (click)="confirm()" [disabled]="!orderForm.valid" >Confirmar</button>
             <button mat-flat-button color="warn" routerLink="/home/clients">Descartar</button>
         </div>
     </div>

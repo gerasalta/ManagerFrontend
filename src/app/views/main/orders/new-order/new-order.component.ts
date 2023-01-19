@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { AbstractControl, Form, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'src/app/services/clients/clients.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
+import { OrdersService } from 'src/app/services/orders/orders.service';
 import { ConfirmOrderDialogComponent } from '../confirm-order-dialog/confirm-order-dialog.component';
 
 @Component({
@@ -16,21 +17,23 @@ export class NewOrderComponent {
 
   public clientId = this.getClientId()
   public clientData: any = {data: ''};
-  public advance: FormControl = new FormControl()
+  public advance: FormControl = new FormControl(null)
   
   public orderForm: FormGroup = new FormGroup ({
-    clientID: new FormControl(this.clientId, [Validators.required]),
-    discount: new FormControl(null, [Validators.max(30)]),
+    clientId: new FormControl(this.clientId, [Validators.required]),
+    discount: new FormControl(null, [Validators.required, Validators.max(30)]),
     advances: new FormArray([]),
     orders: new FormArray([]),
+    term: new FormControl(null),
+    managerId: new FormControl(null)
   })
 
   public ordersControls = this.orderForm.get('orders') as FormArray
 
-  
   constructor(
     public activatedRoute: ActivatedRoute,
     public _clientService: ClientsService,
+    public _orderService: OrdersService,
     public _loadingService: LoadingService,
     public _snackbarService: MatSnackBar,
     public router: Router,
@@ -59,7 +62,21 @@ export class NewOrderComponent {
   confirm(){
     this.pushAdvance()
     this.getSubtotal()
-    this._dialog.open(ConfirmOrderDialogComponent)
+    let dialog = this._dialog.open(ConfirmOrderDialogComponent)
+    dialog.afterClosed()
+    .subscribe(r => {
+      if (r){
+        this._loadingService.open()
+        this.orderForm.get('term').setValue(r.get('term').value)
+        this.orderForm.get('managerId').setValue(r.get('manager').value)
+        this._orderService.post(this.orderForm.value)
+        .subscribe({
+          next: r => { this._snackbarService.open('Orden Creada Exitosamente')},
+          error: e => { this._snackbarService.open('Error al crear orden'), this._loadingService.close() },
+          complete: () => { this.orderForm.reset(); this.advance.reset(); this.router.navigate(['/home/orders']); this._loadingService.close() }
+        })
+      }
+    })
   }
 
   pushAdvance(){
@@ -106,7 +123,7 @@ export class NewOrderComponent {
   getBalance(){
     this.pushAdvance()
     let balance = this.getTotal() - this.orderForm.get('advances').value[0].advance
-    balance === 0 ? balance = null : null
+    balance === 0 && !this.advance.value ? balance = null : null
     return balance
   }
 
