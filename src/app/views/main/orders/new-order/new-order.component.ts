@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, Form, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'src/app/services/clients/clients.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
 import { OrdersService } from 'src/app/services/orders/orders.service';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { ConfirmOrderDialogComponent } from '../confirm-order-dialog/confirm-order-dialog.component';
 
 @Component({
@@ -16,8 +17,9 @@ import { ConfirmOrderDialogComponent } from '../confirm-order-dialog/confirm-ord
 export class NewOrderComponent {
 
   public clientId = this.getClientId()
-  public clientData: any = {data: ''};
-  public advance: FormControl = new FormControl(null)
+  public clientData: any = {data: ''}
+  public balance: FormControl = new FormControl(null)
+  public advance: FormControl = new FormControl(null, [Validators.required, Validators.min(0), Validators.max(this.balance.value)])
   
   public orderForm: FormGroup = new FormGroup ({
     clientId: new FormControl(this.clientId, [Validators.required]),
@@ -43,6 +45,8 @@ export class NewOrderComponent {
   ngOnInit(){
     this.getClientData()
     this.addOrder()
+    this.pushAdvance()
+    this.getBalance()
   }
 
   getClientId(){
@@ -60,8 +64,7 @@ export class NewOrderComponent {
   }
 
   confirm(){
-    this.pushAdvance()
-    this.getSubtotal()
+
     let dialog = this._dialog.open(ConfirmOrderDialogComponent)
     dialog.afterClosed()
     .subscribe(r => {
@@ -81,8 +84,13 @@ export class NewOrderComponent {
 
   pushAdvance(){
     const form = this.orderForm.get('advances') as FormArray
-    form.removeAt(0)
-    form.push(new FormGroup({advance: new FormControl(this.advance.value, [Validators.required, Validators.min(0)])}))
+    this.advance.valueChanges
+    .subscribe(r => {
+      form.removeAt(0)
+      form.push(new FormGroup({advance: new FormControl(Number(this.advance.value))}))
+      console.log(this.orderForm.get('advances').value[0].advance);
+      console.log(this.balance.value);
+    })
   }
 
   addPrefix(symbol?: string){
@@ -92,7 +100,7 @@ export class NewOrderComponent {
   createNewOrderForm(){
     return new FormGroup({
       title: new FormControl('', [Validators.required]),
-      price: new FormControl(null, [Validators.required]),
+      price: new FormControl(null, [Validators.required, Validators.min(100)]),
       description: new FormControl('', [Validators.required]),
     })
   }
@@ -100,11 +108,15 @@ export class NewOrderComponent {
   addOrder(){
     const form = this.orderForm.get('orders') as FormArray
     form.push(this.createNewOrderForm())
+    this.advance.reset()
+    this.orderForm.get('discount').reset()
   }
 
   deleteOrder(index: number){
     const form = this.orderForm.get('orders') as FormArray
     form.removeAt(index)
+    this.advance.reset()
+    this.orderForm.get('discount').reset()
   }
 
   getSubtotal(){
@@ -115,16 +127,33 @@ export class NewOrderComponent {
   }
 
   getTotal(){
-    let total = this.getSubtotal() * ( (100-this.orderForm.get('discount').value) / 100 )
+    let total = 0;
+    total = this.getSubtotal() * ( (100-this.orderForm.get('discount').value) / 100 )
     total === 0 ? total = null : null
     return total
   }
 
   getBalance(){
-    this.pushAdvance()
-    let balance = this.getTotal() - this.orderForm.get('advances').value[0].advance
-    balance === 0 && !this.advance.value ? balance = null : null
-    return balance
+    this.orderForm.valueChanges
+    .subscribe(r => {
+      this.balance.setValue(this.getTotal() - this.advance.value)
+      this.balance.value === 0 && !this.advance.value ? this.balance.setValue(null) : null
+    })
+  }
+
+  clearForm(){
+    let dialog = this._dialog.open(ConfirmDialogComponent, {data: {title: 'Limpiar formulario', message: 'Todos los datos se perderán de manera irreversible'}})
+    dialog.afterClosed()
+    .subscribe(r => {
+      if(r){  
+        const orders = this.orderForm.get('orders') as FormArray
+        orders.clear()
+        this.orderForm.get('discount').reset()
+        this.advance.reset()
+        this.balance.reset()
+        this.addOrder()
+      }
+    })
   }
 
 }

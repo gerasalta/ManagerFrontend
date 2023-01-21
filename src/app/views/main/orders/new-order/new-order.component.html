@@ -36,6 +36,7 @@
                         <span matTextPrefix *ngIf="order.get('price').value" >$</span>
                         <input matInput onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" formControlName="price">
                         <mat-error  *ngIf="order.get('price').hasError('required')" >Campo obligatorio</mat-error>
+                        <mat-error  *ngIf="order.get('price').hasError('min')" > Valor minimo $100 </mat-error>
                     </mat-form-field>
                     <mat-form-field class="description" appearance="fill">
                         <mat-label>Descripción</mat-label>
@@ -65,22 +66,22 @@
                 <mat-label>Total</mat-label>
                 <input matInput [value]="getTotal()" readonly>
             </mat-form-field>
-            <ng-container>
-                <mat-form-field appearance="fill">
-                    <mat-label>Adelanto</mat-label>
-                    <span *ngIf="advance.value"  matTextPrefix >$</span>
-                    <input matInput onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" [formControl]="advance">
-                </mat-form-field>
-            </ng-container>
             <mat-form-field appearance="fill">
-                <span *ngIf="getBalance()"  matTextPrefix >$</span>
-                <mat-label>Balance</mat-label>
-                <input matInput [value]="getBalance()" readonly>
+                <mat-label>Adelanto</mat-label>
+                <span *ngIf="advance.value"  matTextPrefix >$</span>
+                <input matInput onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" [formControl]="advance">
+                <mat-error  *ngIf="advance.hasError('required')">Campo obligatorio</mat-error>
+                <mat-error  *ngIf="advance.hasError('max')">Limite Excedido</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <span *ngIf="balance.value"  matTextPrefix >$</span>
+                <mat-label>Saldo</mat-label>
+                <input matInput [value]="balance.value" [formControl]="balance" readonly>
             </mat-form-field>
         </div>
         <div class="confirm-btn-container">
-            <button mat-flat-button color="primary" (click)="confirm()" [disabled]="!orderForm.valid" >Confirmar</button>
-            <button mat-flat-button color="warn" routerLink="/home/clients">Descartar</button>
+            <button mat-flat-button color="primary" (click)="confirm()" [disabled]="!orderForm.valid || !advance.valid || balance.value < 0" >Confirmar</button>
+            <button mat-flat-button color="warn" (click)="clearForm()" >Limpiar</button>
         </div>
     </div>
 </div>
