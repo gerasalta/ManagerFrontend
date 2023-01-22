@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ManagersService } from 'src/app/services/managers/managers.service';
 
 @Component({
   selector: 'app-confirm-order-dialog',
@@ -10,13 +12,21 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class ConfirmOrderDialogComponent {
 
   public form: FormGroup = new FormGroup({
-    term: new FormControl('', [Validators.required]),
-    manager: new FormControl('', [Validators.required])
+    term: new FormControl(null, [Validators.required]),
+    managerId: new FormControl('', [Validators.required])
   })
+  public todayDate = new Date
+  public managers: any[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<ConfirmOrderDialogComponent>,
+    public _managersService: ManagersService,
+    public _snackbarService: MatSnackBar
   ){}
+
+  ngOnInit(){
+    this.getManagers()
+  }
 
   close(){
     this.dialogRef.close(false)
@@ -24,6 +34,15 @@ export class ConfirmOrderDialogComponent {
 
   confirm(){
     this.dialogRef.close(this.form)
+  }
+
+  getManagers(){
+    this._managersService.getAll()
+    .subscribe({
+      next: (r: any[]) => { this.managers = r},
+      error: e => {this._snackbarService.open('Ha ocurrido un problema')},
+      complete: () => {}
+    })
   }
 
 }

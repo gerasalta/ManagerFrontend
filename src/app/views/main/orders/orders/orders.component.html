@@ -1,1 +1,2 @@
-<p>orders works!</p>
+<app-search-bar (searchEvent)="searchEvent($event)" ></app-search-bar>
+<app-table (pageIndexEvent)="pageIndexEvent($event)" [data]="data" [columnData]="columnData" [totalDocs]="totalDocs" [actionsButtons]="actionsButtons" ></app-table>

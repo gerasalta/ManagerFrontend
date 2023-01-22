@@ -94,7 +94,7 @@ export class ClientsComponent {
     this._clientService.delete(id)
     .subscribe({
       next: (r: any) => {this._snackBar.openFromComponent(SnackBarComponent, {data: {message: 'El cliente ha sido removido con exito'}}); this.getAllClients()},
-      error: e => console.log(e),
+      error: e => {},
       complete: () => { this._loading.close() }
     })
   }
@@ -111,7 +111,7 @@ export class ClientsComponent {
     const dialog = this._dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Eliminar Cliente',
-        message: 'Los datos del cliente serán eliminados de forma permanente'
+        message: 'Los datos del cliente incluyendo sus pedidos serán eliminados de forma permanente'
       }
     })
     dialog.afterClosed()

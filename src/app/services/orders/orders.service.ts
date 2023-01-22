@@ -13,9 +13,19 @@ export class OrdersService {
     private http: HttpClient
   ) { }
 
+  getAll(keyword?: string, pageIndex?: number, pageSize?: number){
+    let keywordQuery = keyword ? `keyword=${keyword}` : ''
+    let pageQuery = pageIndex ? `&pageIndex=${pageIndex}` : ''
+    let pageSizeQuery = pageSize ? `&limit=${pageSize}` : ''
+    return this.http.get(`${this.url}/notes?${keywordQuery}${pageQuery}${pageSizeQuery}`)
+  }
 
   post(order: Order){
     return this.http.post(`${this.url}/notes`, order)
+  }
+
+  delete(id:string){
+    return this.http.delete(`${this.url}/notes/${id}`)
   }
 
 

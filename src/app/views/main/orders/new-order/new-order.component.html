@@ -74,7 +74,7 @@
                 <mat-error  *ngIf="advance.hasError('max')">Limite Excedido</mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill">
-                <span *ngIf="balance.value"  matTextPrefix >$</span>
+                <span *ngIf="balance.value !== null"  matTextPrefix >$</span>
                 <mat-label>Saldo</mat-label>
                 <input matInput [value]="balance.value" [formControl]="balance" readonly>
             </mat-form-field>

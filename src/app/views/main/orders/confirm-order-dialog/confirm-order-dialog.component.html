@@ -2,22 +2,22 @@
     <h1 color="primary" class="header" mat-dialog-title>Crear Orden</h1>
     <div mat-dialog-content>
         <div class="text-container">
-            <span>Ingrese fecha estimada de entrega y un gestor para la orden</span>
+            <span>Ingrese fecha de entrega estimada y un gestor para la orden</span>
         </div>
         <form class="form" [formGroup]="form">
             <mat-form-field appearance="fill">
                 <mat-label>Fecha de Entrega</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="term">
+                <input matInput [matDatepicker]="picker" [min]="todayDate" formControlName="term">
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
+                <mat-error  *ngIf="form.get('term').hasError('required')">Campo obligatorio</mat-error>
               </mat-form-field>
               <mat-form-field appearance="fill">
                 <mat-label>Manager</mat-label>
-                <mat-select formControlName="manager">
-                  <mat-option value="638d1249b0c510cb8c35719f">Gera</mat-option>
-                  <mat-option value="638d1249b0c510cb8c35719f" >Fernando</mat-option>
-                  <mat-option value="638d1249b0c510cb8c35719f">Gaston</mat-option>
+                <mat-select formControlName="managerId">
+                  <mat-option *ngFor="let manager of managers" [value]="manager._id">{{manager.manager}}</mat-option>
                 </mat-select>
+                <mat-error  *ngIf="form.get('managerId').hasError('required')">Campo obligatorio</mat-error>
               </mat-form-field>
         </form>
     </div>

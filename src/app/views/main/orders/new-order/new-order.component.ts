@@ -64,14 +64,13 @@ export class NewOrderComponent {
   }
 
   confirm(){
-
     let dialog = this._dialog.open(ConfirmOrderDialogComponent)
     dialog.afterClosed()
     .subscribe(r => {
       if (r){
         this._loadingService.open()
         this.orderForm.get('term').setValue(r.get('term').value)
-        this.orderForm.get('managerId').setValue(r.get('manager').value)
+        this.orderForm.get('managerId').setValue(r.get('managerId').value)
         this._orderService.post(this.orderForm.value)
         .subscribe({
           next: r => { this._snackbarService.open('Orden Creada Exitosamente')},
@@ -88,8 +87,6 @@ export class NewOrderComponent {
     .subscribe(r => {
       form.removeAt(0)
       form.push(new FormGroup({advance: new FormControl(Number(this.advance.value))}))
-      console.log(this.orderForm.get('advances').value[0].advance);
-      console.log(this.balance.value);
     })
   }
 

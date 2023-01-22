@@ -11,6 +11,7 @@ import { matSnackbarDefaultConfig } from '../constants/snack-bar.config';
 import { LoadingComponent } from './loading/loading.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { dialogGlobalConfig } from '../constants/dialog.config';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,11 @@ import { dialogGlobalConfig } from '../constants/dialog.config';
       useValue: matSnackbarDefaultConfig, 
     },
     { provide: MAT_DIALOG_DEFAULT_OPTIONS,
-      useValue: dialogGlobalConfig}
+      useValue: dialogGlobalConfig
+    },
+    { provide: MAT_DATE_LOCALE,
+      useValue: 'es-ES'
+    }
   ],
 })
 export class SharedModule { }
