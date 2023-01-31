@@ -1,0 +1,43 @@
+<div class="container">
+    <mat-card>
+        <mat-card-content>
+            <div>
+                <span class="title">Cliente:</span>
+                <span>{{' ' + clientData.name + ' ' +clientData.lastName }}</span>
+            </div>
+            <div>
+                <span class="title">Telefono:</span>
+                <span>{{' ' + clientData.phone }}</span>
+            </div>
+            <div>
+                <span class="title">Dirección:</span>
+                <span>{{' ' + clientData.address }}</span>
+            </div>
+            <div>
+                <span class="title">Empresa:</span>
+                <span>{{' ' + clientData.company }}</span>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <div class="form-container">
+        <div class="form" *ngFor="let order of orders; let i = index">
+            <div class="buttons-container">
+                <button mat-flat-button color="primary">{{i+1}}</button>
+                <button id="delete-button" mat-flat-button color="warn" (click)="deleteOrder(order._id)" [disabled]="orders.length <= 1" ><i class="fa-solid fa-trash"></i></button>
+            </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Titulo</mat-label>
+                <input matInput readonly [value]="order.title" >
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Precio</mat-label>
+                <span matTextPrefix >$</span>
+                <input matInput readonly [value]="order.price">
+            </mat-form-field>
+            <mat-form-field class="description" appearance="fill">
+                <mat-label>Descripción</mat-label>
+                <input matInput readonly [value]="order.description">
+            </mat-form-field>
+        </div>
+</div>
+</div>

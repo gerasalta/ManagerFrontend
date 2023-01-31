@@ -10,9 +10,10 @@ import { NewClientDialogComponent } from './clients/new-client-dialog/new-client
 import { ReactiveFormsModule } from '@angular/forms';
 import { NewOrderComponent } from './orders/new-order/new-order.component';
 import { ConfirmOrderDialogComponent } from './orders/confirm-order-dialog/confirm-order-dialog.component';
+import { OrdersDetailsComponent } from './orders/orders-details/orders-details.component';
 
 @NgModule({
-  declarations: [HomeComponent, ClientsComponent, OrdersComponent, NewClientDialogComponent, NewOrderComponent, ConfirmOrderDialogComponent],
+  declarations: [HomeComponent, ClientsComponent, OrdersComponent, NewClientDialogComponent, NewOrderComponent, ConfirmOrderDialogComponent, OrdersDetailsComponent],
   imports: [
     CommonModule,
     MaterialModule,

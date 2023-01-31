@@ -28,5 +28,9 @@ export class OrdersService {
     return this.http.delete(`${this.url}/notes/${id}`)
   }
 
+  getOne(id: string){
+    return this.http.get(`${this.url}/notes/${id}`)
+  }
+
 
 }

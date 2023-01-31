@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { PAGINTATOR_DEFAULT } from 'src/app/constants/paginator.default';
 import { Column } from 'src/app/interfaces/column.base';
 import { LoadingService } from 'src/app/services/loading/loading.service';
@@ -25,7 +26,8 @@ export class OrdersComponent {
     public _ordersService: OrdersService,
     public _loading: LoadingService,
     public _dialog: MatDialog,
-    public _snackbarService: MatSnackBar
+    public _snackbarService: MatSnackBar,
+    public router: Router
   ){}
 
   ngOnInit(){
@@ -55,8 +57,8 @@ export class OrdersComponent {
     this.getAllOrders('', value.pageIndex)
   }
 
-  showEditDialog = (id: string) => {
-    console.log('edit dialog')
+  showViewDialog = (id: string) => {
+    this.router.navigate([`home/orders/${id}/view`])
   }
 
   showDeletedialog = (id: string) => {
@@ -85,7 +87,7 @@ export class OrdersComponent {
 
   setActionsButtons(){
     this.actionsButtons = [
-      {name: 'Editar', fn: this.showEditDialog},
+      {name: 'Ver', fn: this.showViewDialog},
       {name: 'Eliminar', fn: this.showDeletedialog},
     ]
   }
