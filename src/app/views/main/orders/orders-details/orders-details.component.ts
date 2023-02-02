@@ -37,9 +37,9 @@ export class OrdersDetailsComponent {
     this._loadingService.open()
     this._orderService.getOne(this.orderId)
       .subscribe({
-        next: (r: any) => { this.getClientData(r.data.clientId); this.orders = r.data.orders },
+        next: (r: any) => { this.getClientData(r.data.clientId); this.orders = r.data},
         error: e => { this._snackbarService.open('Ha ocurrido un error'), this._loadingService.close() },
-        complete: () => this._loadingService.close()
+        complete: () => {this._loadingService.close()}
       })
   }
 
@@ -61,7 +61,7 @@ export class OrdersDetailsComponent {
     })
     dialog.afterClosed()
       .subscribe(r => {
-        if (r && this.orders.length > 1) {
+        if (r && this.orders.orders.length > 1) {
           this._loadingService.open()
           this._singleOrderService.delete(id)
             .subscribe({
@@ -72,5 +72,5 @@ export class OrdersDetailsComponent {
         }
       })
   }
-
+  
 }

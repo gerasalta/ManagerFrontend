@@ -19,25 +19,58 @@
             </div>
         </mat-card-content>
     </mat-card>
-    <div class="form-container">
-        <div class="form" *ngFor="let order of orders; let i = index">
-            <div class="buttons-container">
-                <button mat-flat-button color="primary">{{i+1}}</button>
-                <button id="delete-button" mat-flat-button color="warn" (click)="deleteOrder(order._id)" [disabled]="orders.length <= 1" ><i class="fa-solid fa-trash"></i></button>
+    <div class="formgroup">
+        <div class="form-container" >
+            <div class="form" *ngFor="let order of orders.orders; let i = index">
+                <div class="buttons-container">
+                    <button mat-flat-button color="primary">{{i+1}}</button>
+                    <button id="delete-button" mat-flat-button color="warn" (click)="deleteOrder(order._id)"  [disabled]="orders.orders.length <= 1" ><i class="fa-solid fa-trash"></i></button>
+                </div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Titulo</mat-label>
+                    <input matInput [value]="order.title" readonly>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Precio</mat-label>
+                    <span matTextPrefix>$</span>
+                    <input matInput [value]="order.price" readonly>
+                </mat-form-field>
+                <mat-form-field class="description" appearance="fill">
+                    <mat-label>Descripción</mat-label>
+                    <input matInput [value]="order.description" readonly>
+                </mat-form-field>
             </div>
+        </div>
+        <div class="balance-container">
             <mat-form-field appearance="fill">
-                <mat-label>Titulo</mat-label>
-                <input matInput readonly [value]="order.title" >
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Precio</mat-label>
                 <span matTextPrefix >$</span>
-                <input matInput readonly [value]="order.price">
+                <mat-label>Subtotal</mat-label>
+                <input matInput [value]="0" readonly>
             </mat-form-field>
-            <mat-form-field class="description" appearance="fill">
-                <mat-label>Descripción</mat-label>
-                <input matInput readonly [value]="order.description">
+            <mat-form-field appearance="fill">
+                <mat-label>Descuento</mat-label>
+                <span matTextPrefix >%</span>
+                <input matInput [value]="orders.discount" readonly>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <span matTextPrefix >$</span>
+                <mat-label>Total</mat-label>
+                <input matInput [value]="0" readonly>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Adelanto</mat-label>
+                <span matTextPrefix >$</span>
+                <input matInput [value]="0" readonly>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <span matTextPrefix >$</span>
+                <mat-label>Saldo</mat-label>
+                <input matInput [value]="0" readonly>
             </mat-form-field>
         </div>
-</div>
+        <div class="confirm-btn-container">
+            <button mat-flat-button color="primary" > Añadir Adelanto</button>
+            <button mat-flat-button color="warn" > Completar Pedido </button>
+        </div>
+    </div>
 </div>

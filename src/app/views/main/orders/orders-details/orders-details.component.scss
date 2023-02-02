@@ -51,6 +51,10 @@ mat-card-content{
     margin-top: 1vh;
 }
 
+.balance-container mat-form-field{
+    width: 18%;
+}
+
 .balance-container{
     display: flex;
     justify-content: space-between;
