@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'src/app/services/clients/clients.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
 import { OrderService } from 'src/app/services/order/order.service';
@@ -18,9 +18,14 @@ export class OrdersDetailsComponent {
   public orderId: string = this.getClientId()
   public clientData: any = {}
   public orders: any = []
+  public subtotal: number = 0
+  public total: number = 0
+  public totalAdvances: number = 0
+  public balance: number = 0
 
   constructor(
     public activatedRoute: ActivatedRoute,
+    public router: Router,
     public _orderService: OrdersService,
     public _snackbarService: MatSnackBar,
     public _loadingService: LoadingService,
@@ -37,9 +42,9 @@ export class OrdersDetailsComponent {
     this._loadingService.open()
     this._orderService.getOne(this.orderId)
       .subscribe({
-        next: (r: any) => { this.getClientData(r.data.clientId); this.orders = r.data},
+        next: (r: any) => { this.getClientData(r.data.clientId); this.orders = r.data },
         error: e => { this._snackbarService.open('Ha ocurrido un error'), this._loadingService.close() },
-        complete: () => {this._loadingService.close()}
+        complete: () => { this._loadingService.close(); this.getSubtotal(), this.getTotal(); this.getAdvances(), this.getBalance() }
       })
   }
 
@@ -52,7 +57,7 @@ export class OrdersDetailsComponent {
     return this.activatedRoute.snapshot.paramMap.get('id')
   }
 
-  deleteOrder(id: string) {
+  deleteOrder(id: string, index: number) {
     let dialog = this._dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Eliminar orden',
@@ -65,12 +70,57 @@ export class OrdersDetailsComponent {
           this._loadingService.open()
           this._singleOrderService.delete(id)
             .subscribe({
-              next: r => {this._snackbarService.open('Pedido eliminado exitosamente'); this.getOrder()},
+              next: r => { this._snackbarService.open('Pedido eliminado exitosamente'); this.getOrder() },
               error: e => this._snackbarService.open('Ha ocurrido un error'),
               complete: () => this._loadingService.close()
             })
         }
       })
   }
-  
+
+  getSubtotal() {
+    this.subtotal = 0;
+    this.orders.orders.forEach(e => {
+      this.subtotal += e.price
+    });
+  }
+
+  getTotal() {
+    this.total = 0;
+    this.total = this.subtotal - this.orders.discount
+  }
+
+  getAdvances() {
+    this.totalAdvances = 0;
+    this.orders.advances.forEach(e => {
+      this.totalAdvances += e.advance
+    });
+  }
+
+  getBalance() {
+    this.balance = 0;
+    this.balance = this.subtotal - this.totalAdvances
+  }
+
+  completeOrder() {
+    const dialog = this._dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: 'Al completar el pedido el mismo sera removido de la lista',
+        title: 'Completar Pedido'
+      }
+    })
+    dialog.afterClosed()
+      .subscribe(r => {
+        if (r) {
+          this._loadingService.open()
+          this._orderService.complete(this.orders._id)
+            .subscribe({
+              next: (r) => { this._snackbarService.open('El pedido ha sido completado'); this.getOrder(); this.router.navigate(['home/orders'])},
+              error: e => { this._snackbarService.open('Ha ocurrido un error'); this._loadingService.close() },
+              complete: () => { this._loadingService.close() }
+            })
+        }
+      })
+  }
+
 }

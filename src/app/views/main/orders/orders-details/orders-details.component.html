@@ -24,7 +24,7 @@
             <div class="form" *ngFor="let order of orders.orders; let i = index">
                 <div class="buttons-container">
                     <button mat-flat-button color="primary">{{i+1}}</button>
-                    <button id="delete-button" mat-flat-button color="warn" (click)="deleteOrder(order._id)"  [disabled]="orders.orders.length <= 1" ><i class="fa-solid fa-trash"></i></button>
+                    <button id="delete-button" mat-flat-button color="warn" (click)="deleteOrder(order._id, i)"  [disabled]="orders.orders.length === 1 || balance - order.price < 0" ><i class="fa-solid fa-trash"></i></button>
                 </div>
                 <mat-form-field appearance="fill">
                     <mat-label>Titulo</mat-label>
@@ -45,7 +45,7 @@
             <mat-form-field appearance="fill">
                 <span matTextPrefix >$</span>
                 <mat-label>Subtotal</mat-label>
-                <input matInput [value]="0" readonly>
+                <input matInput [value]="subtotal" readonly>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Descuento</mat-label>
@@ -55,22 +55,22 @@
             <mat-form-field appearance="fill">
                 <span matTextPrefix >$</span>
                 <mat-label>Total</mat-label>
-                <input matInput [value]="0" readonly>
+                <input matInput [value]="total" readonly>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Adelanto</mat-label>
                 <span matTextPrefix >$</span>
-                <input matInput [value]="0" readonly>
+                <input matInput [value]="totalAdvances" readonly>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <span matTextPrefix >$</span>
                 <mat-label>Saldo</mat-label>
-                <input matInput [value]="0" readonly>
+                <input matInput [value]="balance" readonly>
             </mat-form-field>
         </div>
         <div class="confirm-btn-container">
             <button mat-flat-button color="primary" > Añadir Adelanto</button>
-            <button mat-flat-button color="warn" > Completar Pedido </button>
+            <button mat-flat-button color="warn" (click)="completeOrder()" > Completar Pedido </button>
         </div>
     </div>
 </div>

@@ -32,5 +32,9 @@ export class OrdersService {
     return this.http.get(`${this.url}/notes/${id}`)
   }
 
+  complete(id: string){
+    return this.http.patch(`${this.url}/notes/${id}/complete`, {})
+  }
+
 
 }
