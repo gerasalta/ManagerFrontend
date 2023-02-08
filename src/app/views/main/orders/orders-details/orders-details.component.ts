@@ -7,6 +7,7 @@ import { LoadingService } from 'src/app/services/loading/loading.service';
 import { OrderService } from 'src/app/services/order/order.service';
 import { OrdersService } from 'src/app/services/orders/orders.service';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
+import { AddAdvanceDialogComponent } from '../add-advance-dialog/add-advance-dialog.component';
 
 @Component({
   selector: 'app-orders-details',
@@ -22,7 +23,8 @@ export class OrdersDetailsComponent {
   public total: number = 0
   public totalAdvances: number = 0
   public balance: number = 0
-
+  public completeDialogMsg = 'Al completar el pedido el mismo sera removido de la lista'
+  
   constructor(
     public activatedRoute: ActivatedRoute,
     public router: Router,
@@ -102,10 +104,14 @@ export class OrdersDetailsComponent {
     this.balance = this.subtotal - this.totalAdvances
   }
 
-  completeOrder() {
+  openCompleteDialog() {
+    if(this.balance !== 0){
+      this.completeDialogMsg = 
+      `El pedido será enviado a la lista de deudores por el saldo de $${this.balance}` 
+    }
     const dialog = this._dialog.open(ConfirmDialogComponent, {
       data: {
-        message: 'Al completar el pedido el mismo sera removido de la lista',
+        message: this.completeDialogMsg,
         title: 'Completar Pedido'
       }
     })
@@ -121,6 +127,10 @@ export class OrdersDetailsComponent {
             })
         }
       })
+  }
+
+  openAdvanceDialog(){
+    const dialog = this._dialog.open(AddAdvanceDialogComponent, {data: this.orderId})
   }
 
 }

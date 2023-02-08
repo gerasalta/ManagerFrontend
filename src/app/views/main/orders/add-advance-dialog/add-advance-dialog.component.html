@@ -1,0 +1,28 @@
+<div class="container">
+    <h1 color="primary" class="header" mat-dialog-title>Añadir Adelanto</h1>
+    <div mat-dialog-content>
+        <div *ngFor="let advance of advances; let i = index">
+            <button mat-flat-button color="primary" class="advancePosition" >{{i+1}}</button>
+            <mat-form-field appearance="fill">
+                <mat-label>Adelanto</mat-label>
+                <input matInput [value]="advance.advance" readonly>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                   <mat-label>Fecha del Pago</mat-label>
+                <input matInput [matDatepicker]="picker" [value]="advance.createdAt" readonly>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div *ngIf="balance">
+            <button mat-flat-button color="primary" class="advancePosition"><i class="fa-solid fa-plus"></i></button>
+            <mat-form-field appearance="fill">
+                <mat-label>Adelanto</mat-label>
+                <input matInput >
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions class="buttons-container">
+        <button mat-button color="primary" (click)="close()" >Volver</button>
+        <button mat-button color="primary">Confirmar</button>
+    </div>
+</div>
