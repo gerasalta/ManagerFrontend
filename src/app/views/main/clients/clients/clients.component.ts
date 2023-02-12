@@ -134,9 +134,9 @@ export class ClientsComponent {
 
   setActionsButtons(){
     this.actionsButtons = [
-      {name: 'Editar', fn: this.showEditDialog},
-      {name: 'Eliminar', fn: this.showDeletedialog},
       {name: 'Nuevo Pedido', fn: this.showNewOrderDialog},
+      {name: 'Editar', fn: this.showEditDialog},
+      {name: 'Eliminar', fn: this.showDeletedialog}
     ]
   }
 

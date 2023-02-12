@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdvancesService } from 'src/app/services/advances/advances.service';
 import { ClientsService } from 'src/app/services/clients/clients.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
 import { OrderService } from 'src/app/services/order/order.service';
@@ -33,7 +34,8 @@ export class OrdersDetailsComponent {
     public _loadingService: LoadingService,
     public _clientService: ClientsService,
     public _dialog: MatDialog,
-    public _singleOrderService: OrderService
+    public _singleOrderService: OrderService,
+    public _advanceServices: AdvancesService
   ) { }
 
   ngOnInit() {
@@ -46,7 +48,7 @@ export class OrdersDetailsComponent {
       .subscribe({
         next: (r: any) => { this.getClientData(r.data.clientId); this.orders = r.data },
         error: e => { this._snackbarService.open('Ha ocurrido un error'), this._loadingService.close() },
-        complete: () => { this._loadingService.close(); this.getSubtotal(), this.getTotal(); this.getAdvances(), this.getBalance() }
+        complete: () => { this._loadingService.close(); this.calculateAmounts() }
       })
   }
 
@@ -89,7 +91,7 @@ export class OrdersDetailsComponent {
 
   getTotal() {
     this.total = 0;
-    this.total = this.subtotal - this.orders.discount
+    this.total = this.subtotal * ( (100-this.orders.discount) / 100 )
   }
 
   getAdvances() {
@@ -101,13 +103,20 @@ export class OrdersDetailsComponent {
 
   getBalance() {
     this.balance = 0;
-    this.balance = this.subtotal - this.totalAdvances
+    return this.balance = this.total - this.totalAdvances
+  }
+
+  calculateAmounts(){
+    this.getSubtotal()
+    this.getTotal()
+    this.getAdvances()
+    this.getBalance()
   }
 
   openCompleteDialog() {
     if(this.balance !== 0){
       this.completeDialogMsg = 
-      `El pedido será enviado a la lista de deudores por el saldo de $${this.balance}` 
+      `El pedido será enviado a la lista de deudores (saldo: $${this.balance})` 
     }
     const dialog = this._dialog.open(ConfirmDialogComponent, {
       data: {
@@ -131,6 +140,18 @@ export class OrdersDetailsComponent {
 
   openAdvanceDialog(){
     const dialog = this._dialog.open(AddAdvanceDialogComponent, {data: this.orderId})
+    dialog.afterClosed()
+    .subscribe(r => {
+      if (r){
+        this._loadingService.open()
+        this._advanceServices.patch(this.orderId, r)
+        .subscribe({
+          next: r => {this._snackbarService.open('Adelanto añadido')},
+          error: e => this._snackbarService.open('Ha ocurrido un error'),
+          complete: () => {this._loadingService.close()}
+        })
+      }
+    })
   }
 
 }
