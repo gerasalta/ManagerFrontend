@@ -146,7 +146,7 @@ export class OrdersDetailsComponent {
         this._loadingService.open()
         this._advanceServices.patch(this.orderId, r)
         .subscribe({
-          next: r => {this._snackbarService.open('Adelanto añadido')},
+          next: r => {this._snackbarService.open('Adelanto añadido'), this.calculateAmounts()},
           error: e => this._snackbarService.open('Ha ocurrido un error'),
           complete: () => {this._loadingService.close()}
         })

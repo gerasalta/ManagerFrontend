@@ -50,11 +50,7 @@ export class AddAdvanceDialogComponent {
   }
 
   confirm(){
-    this._advanceService.patch(this.data, this.newAdvance.value)
-    .subscribe({
-      next: (r: any) => !r.hasError ? this.dialogRef.close(this.newAdvance.value) : this.dialogRef.close(false),
-      error: e => this._snackbarService.open('Ha ocurrido un error')
-    })
+    this.dialogRef.close(this.newAdvance.value)
   }
 
 }
