@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,10 +21,18 @@ export class OrdersDetailsComponent {
   public orderId: string = this.getClientId()
   public clientData: any = {}
   public orders: any = []
-  public subtotal: number = 0
-  public total: number = 0
-  public totalAdvances: number = 0
-  public balance: number = 0
+  public balancesForm: FormGroup = new FormGroup({
+    subtotal: new FormControl(0),
+    total: new FormControl(0),
+    totalAdvances: new FormControl(0),
+    balance: new FormControl(0),
+  })
+
+  public subtotalControl = this.balancesForm.get('subtotal') as AbstractControl
+  public totalControl = this.balancesForm.get('total') as AbstractControl
+  public totalAdvancesControl = this.balancesForm.get('totalAdvances') as AbstractControl
+  public balanceControl = this.balancesForm.get('balance') as AbstractControl
+
   public completeDialogMsg = 'Al completar el pedido el mismo sera removido de la lista'
   
   constructor(
@@ -83,27 +92,31 @@ export class OrdersDetailsComponent {
   }
 
   getSubtotal() {
-    this.subtotal = 0;
+    this.subtotalControl.setValue(0)
+    let subTotal = 0
     this.orders.orders.forEach(e => {
-      this.subtotal += e.price
+      subTotal += e.price
     });
+    this.subtotalControl.setValue(subTotal)
   }
 
   getTotal() {
-    this.total = 0;
-    this.total = this.subtotal * ( (100-this.orders.discount) / 100 )
+    this.totalControl.setValue(0);
+    this.totalControl.setValue(this.subtotalControl.value * ( (100-this.orders.discount) / 100 ))
   }
 
   getAdvances() {
-    this.totalAdvances = 0;
-    this.orders.advances.forEach(e => {
-      this.totalAdvances += e.advance
+    this.totalAdvancesControl.setValue(0);
+    let total = 0
+    this.orders.advances.forEach(r => {
+      total += r.advance
     });
+    this.totalAdvancesControl.setValue(total)
   }
 
   getBalance() {
-    this.balance = 0;
-    return this.balance = this.total - this.totalAdvances
+    this.balanceControl.setValue(0)
+    this.balanceControl.setValue(this.totalControl.value - this.totalAdvancesControl.value)
   }
 
   calculateAmounts(){
@@ -114,9 +127,9 @@ export class OrdersDetailsComponent {
   }
 
   openCompleteDialog() {
-    if(this.balance !== 0){
-      this.completeDialogMsg = 
-      `El pedido será enviado a la lista de deudores (saldo: $${this.balance})` 
+    this.completeDialogMsg = 'Al completar el pedido el mismo sera removido de la lista'
+    if(this.balanceControl.value > 0){
+      this.completeDialogMsg = `El pedido será enviado a la lista de deudores (saldo: $${this.balanceControl.value})` 
     }
     const dialog = this._dialog.open(ConfirmDialogComponent, {
       data: {
@@ -146,7 +159,7 @@ export class OrdersDetailsComponent {
         this._loadingService.open()
         this._advanceServices.patch(this.orderId, r)
         .subscribe({
-          next: r => {this._snackbarService.open('Adelanto añadido'), this.calculateAmounts()},
+          next: r => {this._snackbarService.open('Adelanto añadido'); this.getOrder()},
           error: e => this._snackbarService.open('Ha ocurrido un error'),
           complete: () => {this._loadingService.close()}
         })

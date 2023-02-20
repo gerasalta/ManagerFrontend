@@ -24,7 +24,7 @@
             <div class="form" *ngFor="let order of orders.orders; let i = index">
                 <div class="buttons-container">
                     <button mat-flat-button color="primary">{{i+1}}</button>
-                    <button id="delete-button" mat-flat-button color="warn" (click)="deleteOrder(order._id, i)"  [disabled]="balance - order.price < 0" ><i class="fa-solid fa-trash"></i></button>
+                    <button id="delete-button" mat-flat-button color="warn" (click)="deleteOrder(order._id, i)"  [disabled]="balanceControl.value - order.price < 0" ><i class="fa-solid fa-trash"></i></button>
                 </div>
                 <mat-form-field appearance="fill">
                     <mat-label>Titulo</mat-label>
@@ -41,11 +41,11 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="balance-container">
+        <div class="balance-container" [formGroup]="balancesForm">
             <mat-form-field appearance="fill">
                 <span matTextPrefix >$</span>
                 <mat-label>Subtotal</mat-label>
-                <input matInput [value]="subtotal" readonly>
+                <input matInput formControlName="subtotal" readonly>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Descuento</mat-label>
@@ -55,17 +55,17 @@
             <mat-form-field appearance="fill">
                 <span matTextPrefix >$</span>
                 <mat-label>Total</mat-label>
-                <input matInput [value]="total" readonly>
+                <input matInput formControlName="total" readonly>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Adelanto</mat-label>
                 <span matTextPrefix >$</span>
-                <input matInput [value]="totalAdvances" readonly>
+                <input matInput formControlName="totalAdvances" readonly>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <span matTextPrefix >$</span>
                 <mat-label>Saldo</mat-label>
-                <input matInput [value]="balance" readonly>
+                <input matInput formControlName="balance" readonly>
             </mat-form-field>
         </div>
         <div class="confirm-btn-container">
