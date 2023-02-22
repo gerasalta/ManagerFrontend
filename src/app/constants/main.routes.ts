@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 import { LoginComponent } from "../views/auth/login/login/login.component";
 import { ClientsComponent } from "../views/main/clients/clients/clients.component";
+import { DebtorsComponent } from "../views/main/debtors/debtors/debtors.component";
 import { HomeComponent } from "../views/main/home/home/home.component";
 import { NewOrderComponent } from "../views/main/orders/new-order/new-order.component";
 import { OrdersDetailsComponent } from "../views/main/orders/orders-details/orders-details.component";
@@ -13,6 +14,7 @@ export const MAIN_ROUTES: Routes = [
     children:[
         {title:'Clientes', path: 'clients', component: ClientsComponent},
         {title:'Pedidos', path: 'orders', component: OrdersComponent},
+        {title:'Deudores', path: 'debtors', component: DebtorsComponent},
         {path: 'orders/:id/new', component: NewOrderComponent},
         {path: 'orders/:id/view', component: OrdersDetailsComponent},
     ]},

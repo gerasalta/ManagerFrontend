@@ -13,11 +13,12 @@ export class OrdersService {
     private http: HttpClient
   ) { }
 
-  getAll(keyword?: string, pageIndex?: number, pageSize?: number){
+  getAll(keyword?: string, pageIndex?: number, pageSize?: number, status?: boolean){
     let keywordQuery = keyword ? `keyword=${keyword}` : ''
     let pageQuery = pageIndex ? `&pageIndex=${pageIndex}` : ''
     let pageSizeQuery = pageSize ? `&limit=${pageSize}` : ''
-    return this.http.get(`${this.url}/notes?${keywordQuery}${pageQuery}${pageSizeQuery}`)
+    let statusQuery = status ? `&complete=${status}` : ''
+    return this.http.get(`${this.url}/notes?${keywordQuery}${pageQuery}${pageSizeQuery}${statusQuery}`)
   }
 
   post(order: Order){

@@ -12,17 +12,29 @@ import { NewOrderComponent } from './orders/new-order/new-order.component';
 import { ConfirmOrderDialogComponent } from './orders/confirm-order-dialog/confirm-order-dialog.component';
 import { OrdersDetailsComponent } from './orders/orders-details/orders-details.component';
 import { AddAdvanceDialogComponent } from './orders/add-advance-dialog/add-advance-dialog.component';
+import { DebtorsComponent } from './debtors/debtors/debtors.component';
+import { PaymentDialogComponent } from './debtors/payment-dialog/payment-dialog.component';
 
 @NgModule({
-  declarations: [HomeComponent, ClientsComponent, OrdersComponent, NewClientDialogComponent, NewOrderComponent, ConfirmOrderDialogComponent, OrdersDetailsComponent, AddAdvanceDialogComponent],
+  declarations: [
+    HomeComponent, 
+    ClientsComponent,
+    OrdersComponent,
+    NewClientDialogComponent,
+    NewOrderComponent,
+    ConfirmOrderDialogComponent,
+    OrdersDetailsComponent,
+    AddAdvanceDialogComponent,
+    DebtorsComponent,
+    PaymentDialogComponent
+  ],
   imports: [
     CommonModule,
     MaterialModule,
     SharedModule,
     AppRoutingModule,
     ReactiveFormsModule
-  ],
-  exports: [HomeComponent, ClientsComponent, OrdersComponent]
+  ]
 })
 
 export class MainModule { }

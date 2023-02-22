@@ -39,7 +39,7 @@ export class NewOrderComponent {
     public _loadingService: LoadingService,
     public _snackbarService: MatSnackBar,
     public router: Router,
-    public _dialog: MatDialog
+    public dialog: MatDialog
     ){}
 
   ngOnInit(){
@@ -64,7 +64,7 @@ export class NewOrderComponent {
   }
 
   confirm(){
-    let dialog = this._dialog.open(ConfirmOrderDialogComponent)
+    let dialog = this.dialog.open(ConfirmOrderDialogComponent)
     dialog.afterClosed()
     .subscribe(r => {
       if (r){
@@ -139,7 +139,7 @@ export class NewOrderComponent {
   }
 
   clearForm(){
-    let dialog = this._dialog.open(ConfirmDialogComponent, {data: {title: 'Limpiar formulario', message: 'Todos los datos se perderán de manera irreversible'}})
+    let dialog = this.dialog.open(ConfirmDialogComponent, {data: {title: 'Limpiar formulario', message: 'Todos los datos se perderán de manera irreversible'}})
     dialog.afterClosed()
     .subscribe(r => {
       if(r){  

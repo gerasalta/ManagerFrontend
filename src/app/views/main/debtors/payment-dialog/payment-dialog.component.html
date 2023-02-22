@@ -1,0 +1,33 @@
+<div class="container">
+    <h1 color="primary" class="header" mat-dialog-title>Pagar Deuda</h1>
+    <div mat-dialog-content>
+        <div *ngFor="let advance of advances; let i = index">
+            <button mat-flat-button color="primary" class="advancePosition" >{{i+1}}</button>
+            <mat-form-field appearance="fill">
+                <mat-label>Fecha del Pago</mat-label>
+             <input matInput [matDatepicker]="picker" [value]="advance.createdAt" readonly>
+             <mat-datepicker #picker></mat-datepicker>
+         </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Adelanto</mat-label>
+                <input matInput [value]="advance.advance" readonly>
+            </mat-form-field>
+        </div>
+        <div *ngIf="balance">
+            <button mat-flat-button color="primary" class="advancePosition"><i class="fa-solid fa-plus"></i></button>
+            <mat-form-field appearance="fill">
+                <mat-label >Adelanto</mat-label>
+                <input matInput [formControl]="newAdvance" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)">
+                <mat-error  *ngIf="getBalance() < 0">Limite Excedido</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label >Saldo Total</mat-label>
+                <input matInput [value]="getBalance()" readonly>
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions class="buttons-container">
+        <button mat-button color="primary" (click)="close()">Volver</button>
+        <button mat-button color="primary" (click)="confirm()">Confirmar</button>
+    </div>
+</div>
