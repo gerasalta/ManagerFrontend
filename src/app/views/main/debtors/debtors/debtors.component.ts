@@ -120,7 +120,9 @@ export class DebtorsComponent {
       next: (r: any) => {
         if(r.data.balance === 0){
           this._ordersService.delete(id)
-          .subscribe()
+          .subscribe({
+            next: r => {this._snackbarService.open('Deuda removida exitosamente')}
+          })
         }
         this.getAllOrders()
       },
