@@ -14,6 +14,7 @@ import { OrdersDetailsComponent } from './orders/orders-details/orders-details.c
 import { AddAdvanceDialogComponent } from './orders/add-advance-dialog/add-advance-dialog.component';
 import { DebtorsComponent } from './debtors/debtors/debtors.component';
 import { PaymentDialogComponent } from './debtors/payment-dialog/payment-dialog.component';
+import { TasksComponent } from './tasks/tasks/tasks.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PaymentDialogComponent } from './debtors/payment-dialog/payment-dialog.
     OrdersDetailsComponent,
     AddAdvanceDialogComponent,
     DebtorsComponent,
-    PaymentDialogComponent
+    PaymentDialogComponent,
+    TasksComponent
   ],
   imports: [
     CommonModule,
