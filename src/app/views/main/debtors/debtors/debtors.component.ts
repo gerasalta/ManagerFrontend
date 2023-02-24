@@ -73,7 +73,7 @@ export class DebtorsComponent {
             this._snackbarService.open('Pago añadido');
             this.checkBalance(id)
           },
-          error: e => this._snackbarService.open('Ha ocurrido un error'),
+          error: e => {this._snackbarService.open('Ha ocurrido un error'), this._loading.close()},
           complete: () => {this._loadingService.close()}
         })
       }
@@ -121,12 +121,16 @@ export class DebtorsComponent {
         if(r.data.balance === 0){
           this._ordersService.delete(id)
           .subscribe({
-            next: r => {this._snackbarService.open('Deuda removida exitosamente')}
+            next: r => {this._snackbarService.open('Deuda removida exitosamente')},
+            error: e => {this._snackbarService.open('Ha ocurrido un error')},
+            complete: () => {this.getAllOrders()}
           })
+        }else{
+          this.getAllOrders()
         }
-        this.getAllOrders()
       },
-      error: e => {this._snackbarService.open('Ha ocurrido un error')}
+      error: e => {this._snackbarService.open('Ha ocurrido un error')},
+      complete: () => { }
     })
   }
 

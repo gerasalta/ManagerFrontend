@@ -1,0 +1,31 @@
+<div class="container">
+    <h1 color="primary" class="header" mat-dialog-title>Crear Tarea</h1>
+    <div mat-dialog-content>
+        <form [formGroup]="newTask" class="form">
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Manager</mat-label>
+                    <mat-select formControlName="managerId">
+                      <mat-option *ngFor="let manager of managers; let i = index" value="{{manager._id}}" >{{manager.manager}}</mat-option>
+                    </mat-select>
+                    <mat-error  *ngIf="newTask.get('managerId').hasError('required')">Campo obligatorio</mat-error>
+                  </mat-form-field>
+                <mat-form-field appearance="fill" class="row-input">
+                    <mat-label>Referencia</mat-label>
+                    <input formControlName="reference" matInput autofocus>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill"  class="full-width">
+                    <mat-label>Descripción</mat-label>
+                    <input formControlName="description" matInput autofocus>
+                    <mat-error  *ngIf="newTask.get('description').hasError('required')">Campo obligatorio</mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+    <div mat-dialog-actions class="buttons-container">
+        <button mat-button color="primary" (click)="close()">Volver</button>
+        <button mat-button color="primary" (click)="confirm()" [disabled]="!newTask.valid" >Confirmar</button>
+    </div>
+</div>

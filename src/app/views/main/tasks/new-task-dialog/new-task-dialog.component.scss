@@ -1,0 +1,32 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form{
+    margin-top: 2vh;
+}
+
+.buttons-container{
+    display: flex;
+    justify-content: center;
+}
+
+.form mat-form-field{
+    margin-inline: 1vw;
+}
+
+.text-container{
+    display: flex;
+    justify-content: center;
+}
+
+.full-width{
+    margin: 0px;
+    width: 94.5%;
+}
+
+mat-form-field{
+    margin-inline: 10px;
+}

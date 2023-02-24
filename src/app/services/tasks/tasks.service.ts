@@ -24,4 +24,8 @@ export class TasksService {
     return this.http.delete(`${this.url}/tasks/${id}`)
   }
 
+  post(task: any){
+    return this.http.post(`${this.url}/tasks`, task)
+  }
+
 }

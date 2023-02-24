@@ -7,6 +7,7 @@ import { Column } from 'src/app/interfaces/column.base';
 import { LoadingService } from 'src/app/services/loading/loading.service';
 import { TasksService } from 'src/app/services/tasks/tasks.service';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
+import { NewTaskDialogComponent } from '../new-task-dialog/new-task-dialog.component';
 
 @Component({
   selector: 'app-tasks',
@@ -33,6 +34,7 @@ export class TasksComponent {
   ngOnInit(){
     this.getAllTasks(),
     this.setActionsButtons()
+    this.setSearchButton()
   }
 
   getAllTasks(keyword?: string, pageIndex?: number){
@@ -47,6 +49,7 @@ export class TasksComponent {
   setColumns(){
     return this.columnData = [
       {title: 'Tarea', property: 'description'},
+      {title: 'Referencia', property: 'reference'},
       {title: 'Gestor', property: 'manager'}
     ]
   }
@@ -71,10 +74,10 @@ export class TasksComponent {
       message: 'Se eliminará la tarea de forma permanente'
     }})
     dialog.afterClosed()
-    .subscribe({
-      next: r => {this.deleteTask(id)},
-      error: e => {this._snackbarService.open('Ha ocurrido un problema')},
-      complete: () => {}
+    .subscribe(r => {
+      if (r) {
+        this.deleteTask(id)
+      }
     })
   }
 
@@ -86,6 +89,33 @@ export class TasksComponent {
       error: e => {this._snackbarService.open('Ha ocurrido un problema')},
       complete: () => {this._loading.close()}
     })
+  }
+
+  setSearchButton(){
+    this.searchButtons = [
+      {name: 'Nueva Tarea', fn: this.showNewTaskDialog},
+      {name: 'Filtros', fn: this.showFiltersDialog},
+    ]
+  }
+
+  showNewTaskDialog = (id:string) => {
+    const dialog = this._dialog.open(NewTaskDialogComponent, {data: id})
+    dialog.afterClosed()
+    .subscribe(r => {
+      if (r) {
+        this._loading.open()
+        this._tasksService.post(r)
+        .subscribe({
+          next: r => {this.getAllTasks(), this._snackbarService.open('Tarea añadida')},
+          error: e => {this._snackbarService.open('Ha ocurrido un error'), this._loading.close()},
+          complete: () => {this._loading.close()}
+        })
+      }
+    })
+  }
+
+  showFiltersDialog = (id:string) => {
+    const dialog = this._dialog.open(NewTaskDialogComponent, {data: id})
   }
 
 }
