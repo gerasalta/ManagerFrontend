@@ -8,6 +8,7 @@ import { LoadingService } from 'src/app/services/loading/loading.service';
 import { TasksService } from 'src/app/services/tasks/tasks.service';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { NewTaskDialogComponent } from '../new-task-dialog/new-task-dialog.component';
+import { ReAssignTaskDialogComponent } from '../re-assign-task-dialog/re-assign-task-dialog.component';
 
 @Component({
   selector: 'app-tasks',
@@ -39,7 +40,7 @@ export class TasksComponent {
 
   getAllTasks(keyword?: string, pageIndex?: number){
     this._loading.open()
-    this._tasksService.getAll(keyword, pageIndex, this.pageSize, this.completeStatus)
+    this._tasksService.getAll(keyword, pageIndex, this.pageSize)
     .subscribe({
       next: (r: any) => { this.data = r.docs; this.totalDocs = r.totalDocs},
       complete: () => { this._loading.close() }
@@ -57,6 +58,7 @@ export class TasksComponent {
   setActionsButtons(){
     this.actionsButtons = [
       {name: 'Eliminar', fn: this.showDeleteDialog},
+      {name: 'Reasignar', fn: this.showReAsssingDialog},
     ]
   }
 
@@ -81,6 +83,16 @@ export class TasksComponent {
     })
   }
 
+  showReAsssingDialog = (id: string) =>{
+    const dialog = this._dialog.open(ReAssignTaskDialogComponent, {data: id})
+    dialog.afterClosed()
+    .subscribe(r => {
+      if(r){
+        this.reAssignTask(id, r)
+      }
+    })
+  }
+
   deleteTask(id: string){
     this._loading.open()
     this._tasksService.delete(id)
@@ -93,8 +105,7 @@ export class TasksComponent {
 
   setSearchButton(){
     this.searchButtons = [
-      {name: 'Nueva Tarea', fn: this.showNewTaskDialog},
-      {name: 'Filtros', fn: this.showFiltersDialog},
+      {name: 'Nueva Tarea', fn: this.showNewTaskDialog}
     ]
   }
 
@@ -116,6 +127,16 @@ export class TasksComponent {
 
   showFiltersDialog = (id:string) => {
     const dialog = this._dialog.open(NewTaskDialogComponent, {data: id})
+  }
+
+  reAssignTask(taskId: string, managerId: string){
+    this._loading.open()
+    this._tasksService.patch(taskId, {managerId: managerId})
+    .subscribe({
+      next: r => { this._snackbarService.open('Tarea reasignada'); this.getAllTasks() },
+      error: e => { this._snackbarService.open('Ha ocurrido un error'), this._loading.close() },
+      complete: () => { this._loading.close() }
+    })
   }
 
 }

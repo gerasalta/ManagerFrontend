@@ -4,7 +4,7 @@
         <form [formGroup]="newTask" class="form">
             <div>
                 <mat-form-field appearance="fill">
-                    <mat-label>Manager</mat-label>
+                    <mat-label>Gestor</mat-label>
                     <mat-select formControlName="managerId">
                       <mat-option *ngFor="let manager of managers; let i = index" value="{{manager._id}}" >{{manager.manager}}</mat-option>
                     </mat-select>

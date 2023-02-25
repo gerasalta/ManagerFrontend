@@ -1,0 +1,20 @@
+<div class="container">
+    <h1 color="primary" class="header" mat-dialog-title>Reasignar Tarea</h1>
+    <div mat-dialog-content>
+        <div class="text-container">
+            <span>Seleccione un nuevo Gestor para la tarea</span>
+        </div>
+        <div class="form">
+            <mat-form-field appearance="fill">
+                <mat-label>Gestor</mat-label>
+                <mat-select [formControl]="newManagerId">
+                    <mat-option *ngFor="let manager of managers" [value]="manager._id">{{manager.manager}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions class="buttons-container">
+        <button mat-button color="primary" (click)="close()">Volver</button>
+        <button mat-button color="primary" (click)="confirm()" [disabled]="defaultManager === newManagerId.value" >Confirmar</button>
+    </div>
+</div>

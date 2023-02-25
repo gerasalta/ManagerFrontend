@@ -12,20 +12,26 @@ export class TasksService {
     private http: HttpClient
   ) { }
 
-  getAll(keyword?: string, pageIndex?: number, pageSize?: number, status?: boolean){
+  post(task: any){
+    return this.http.post(`${this.url}/tasks`, task)
+  }
+
+  getAll(keyword?: string, pageIndex?: number, pageSize?: number){
     let keywordQuery = keyword ? `keyword=${keyword}` : ''
     let pageQuery = pageIndex ? `&pageIndex=${pageIndex}` : ''
     let pageSizeQuery = pageSize ? `&limit=${pageSize}` : ''
-    let statusQuery = status ? `&complete=${status}` : ''
-    return this.http.get(`${this.url}/tasks?${keywordQuery}${pageQuery}${pageSizeQuery}${statusQuery}`)
+    return this.http.get(`${this.url}/tasks?${keywordQuery}${pageQuery}${pageSizeQuery}`)
+  }
+
+  getOne(id: string){
+    return this.http.get(`${this.url}/tasks/${id}`)
   }
 
   delete(id:string){
     return this.http.delete(`${this.url}/tasks/${id}`)
   }
 
-  post(task: any){
-    return this.http.post(`${this.url}/tasks`, task)
+  patch(taskId: string, managerId: any){
+    return this.http.patch(`${this.url}/tasks/${taskId}`, managerId)
   }
-
 }
