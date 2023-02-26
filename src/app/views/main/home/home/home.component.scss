@@ -20,3 +20,17 @@ mat-list-item{
     display: flex;
     flex-direction: column;
 }
+
+.fa-solid{
+    font-size: 13px;
+}
+
+.menu-btn span{
+    margin-left: 8px;
+}
+
+.menu-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

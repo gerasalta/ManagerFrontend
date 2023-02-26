@@ -1,0 +1,47 @@
+.container{
+    height: 92.7vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card{
+    max-width: 350px;
+    padding: 1vw;
+}
+
+mat-card-header{
+    display: flex;
+    justify-content: center;
+}
+
+mat-card-content{
+    margin-top: 1vh;
+}
+
+mat-card-actions{
+    display: flex;
+    justify-content: center;
+}
+
+.login-btn{
+    width: 70%;
+}
+
+mat-form-field {
+    margin: 0px;
+    width: 100%;
+}
+
+.example-container mat-form-field + mat-form-field {
+    margin-left: 8px;
+  }
+  
+  .example-right-align {
+    text-align: right;
+  }
+  
+  input.example-right-align::-webkit-outer-spin-button,
+  input.example-right-align::-webkit-inner-spin-button {
+    display: none;
+  }

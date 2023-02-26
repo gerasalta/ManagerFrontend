@@ -1,1 +1,32 @@
-<p>login works!</p>
+<div class="container">
+    <mat-card class="card">
+        <mat-card-header>
+            <mat-card-title>
+                <span color="primary">
+                    LOGIN
+                </span>
+            </mat-card-title>
+            <!-- <mat-card-subtitle>LOGIN</mat-card-subtitle> -->
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="loginForm">
+                <mat-form-field >
+                    <mat-label>User</mat-label>
+                    <input matInput  autofocus formControlName="username">
+                    <mat-error *ngIf="!usernameControl.valid">Ingrese un usuario valido</mat-error>
+                  </mat-form-field>
+                <mat-form-field >
+                    <mat-label>Contraseña</mat-label>
+                    <input [type]="hide ? 'password' : 'text'" matInput formControlName="password">
+                    <mat-error *ngIf="!passwordControl.valid">Ingrese una contraseña valido</mat-error>
+                    <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                      </button>
+                  </mat-form-field>
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-flat-button color="primary" class="login-btn" (click)="login()" [disabled]="!loginForm.valid">Iniciar Sesión</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

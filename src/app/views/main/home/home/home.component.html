@@ -1,17 +1,27 @@
 <mat-toolbar color="primary">
-    <button mat-flat-button color="primary">Fc Manager</button>
-    <button mat-flat-button color="primary"><i class="fa-solid fa-user"></i></button>
+    <button mat-flat-button color="primary" routerLink="/home">Fc Manager</button>
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu"><i class="fa-solid fa-user"></i></button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item class="menu-btn">
+            <i class="fa-solid fa-gear"></i>
+            <span>Configuración</span>
+        </button>
+        <button mat-menu-item class="menu-btn">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Cerrar Sesión</span>
+        </button>
+    </mat-menu>
 </mat-toolbar>
 <app-loading></app-loading>
 <mat-sidenav-container class="example-container">
     <mat-sidenav mode="side" opened>
         <mat-list role="list">
             <mat-list-item *ngFor="let route of routes; let i" role="listitem">
-                <button class="side-nav-button" mat-flat-button color="primary" [routerLink]="route.path" >{{route.title}}</button>
+                <button class="side-nav-button" mat-flat-button color="primary" [routerLink]="route.path">{{route.title}}</button>
             </mat-list-item>
-          </mat-list>
+        </mat-list>
     </mat-sidenav>
     <mat-sidenav-content>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
-  </mat-sidenav-container>
+</mat-sidenav-container>

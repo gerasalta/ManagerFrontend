@@ -17,6 +17,7 @@ import { PaymentDialogComponent } from './debtors/payment-dialog/payment-dialog.
 import { TasksComponent } from './tasks/tasks/tasks.component';
 import { NewTaskDialogComponent } from './tasks/new-task-dialog/new-task-dialog.component';
 import { ReAssignTaskDialogComponent } from './tasks/re-assign-task-dialog/re-assign-task-dialog.component';
+import { AuthModule } from '../auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ReAssignTaskDialogComponent } from './tasks/re-assign-task-dialog/re-as
     MaterialModule,
     SharedModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AuthModule
   ]
 })
 

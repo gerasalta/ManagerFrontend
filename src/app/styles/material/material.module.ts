@@ -40,7 +40,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatProgressBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    
   ],
   exports:[
     MatSlideToggleModule,
