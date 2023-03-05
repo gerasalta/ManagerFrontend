@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { MAIN_ROUTES } from 'src/app/constants/main.routes';
 
 @Component({
@@ -11,7 +13,10 @@ export class HomeComponent {
 
   public routes = this.setRoutes()
 
-  constructor(){}
+  constructor(
+    public _cookieService: CookieService,
+    public router: Router
+  ){}
 
   ngOnInit(){
   }
@@ -19,6 +24,11 @@ export class HomeComponent {
   setRoutes(){
     const routes = MAIN_ROUTES.find(r => r.path === 'home')?.children
     return routes.filter(r => r.title)
+  }
+
+  logout(){
+    this._cookieService.delete('access_token')
+    this.router.navigate(['login'])
   }
 
 }

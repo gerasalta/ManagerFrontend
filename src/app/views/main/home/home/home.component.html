@@ -6,10 +6,7 @@
             <i class="fa-solid fa-gear"></i>
             <span>Configuración</span>
         </button>
-        <button mat-menu-item class="menu-btn">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Cerrar Sesión</span>
-        </button>
+        <button mat-menu-item class="menu-btn" (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i><span>Cerrar Sesión</span></button>
     </mat-menu>
 </mat-toolbar>
 <app-loading></app-loading>
