@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">
-    <button mat-flat-button color="primary" routerLink="/home">Fc Manager</button>
+    <span>Fc Manager</span>
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu"><i class="fa-solid fa-user"></i></button>
     <mat-menu #menu="matMenu">
-        <button mat-menu-item class="menu-btn">
+        <button mat-menu-item class="menu-btn" (click)="navigateToAdmin()" >
             <i class="fa-solid fa-gear"></i>
             <span>Configuración</span>
         </button>

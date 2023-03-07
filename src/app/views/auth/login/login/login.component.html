@@ -23,10 +23,8 @@
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                       </button>
                   </mat-form-field>
+                  <button type="submit" mat-flat-button color="primary" class="login-btn" (click)="login()" [disabled]="!loginForm.valid">Iniciar Sesión</button>
             </form>
         </mat-card-content>
-        <mat-card-actions>
-            <button type="submit" mat-flat-button color="primary" class="login-btn" (click)="login()" [disabled]="!loginForm.valid">Iniciar Sesión</button>
-        </mat-card-actions>
     </mat-card>
 </div>

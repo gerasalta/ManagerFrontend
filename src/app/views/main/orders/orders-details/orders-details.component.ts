@@ -70,7 +70,7 @@ export class OrdersDetailsComponent {
     return this.activatedRoute.snapshot.paramMap.get('id')
   }
 
-  deleteOrder(id: string, index: number) {
+  deleteOrder(id: string) {
     let dialog = this._dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Eliminar orden',
@@ -143,7 +143,15 @@ export class OrdersDetailsComponent {
           this._loadingService.open()
           this._orderService.complete(this.orders._id)
             .subscribe({
-              next: (r) => { this._snackbarService.open('El pedido ha sido completado'); this.getOrder(); this.router.navigate(['home/orders'])},
+              next: (r) => {
+                this._snackbarService.open('El pedido ha sido completado');
+                this.getOrder();
+                this.router.navigate(['home/orders']);
+                if(this.balanceControl.value === 0){
+                  this._orderService.delete(this.orderId)
+                  .subscribe()
+                }
+              },
               error: e => { this._snackbarService.open('Ha ocurrido un error'); this._loadingService.close() },
               complete: () => { this._loadingService.close() }
             })
@@ -159,7 +167,7 @@ export class OrdersDetailsComponent {
         this._loadingService.open()
         this._advanceServices.patch(this.orderId, r)
         .subscribe({
-          next: r => {this._snackbarService.open('Adelanto añadido'); this.getOrder()},
+          next: r => {this._snackbarService.open('Pago añadido'); this.getOrder()},
           error: e => this._snackbarService.open('Ha ocurrido un error'),
           complete: () => {this._loadingService.close()}
         })

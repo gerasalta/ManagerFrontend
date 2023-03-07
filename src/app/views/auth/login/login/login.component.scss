@@ -45,3 +45,9 @@ mat-form-field {
   input.example-right-align::-webkit-inner-spin-button {
     display: none;
   }
+
+  form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }

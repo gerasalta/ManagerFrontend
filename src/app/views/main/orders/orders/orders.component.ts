@@ -49,7 +49,8 @@ export class OrdersComponent {
       {title: 'Cliente', property: 'fullName'},
       {title: 'Empresa', property: 'company'},
       {title: 'Gestor', property: 'managerName'},
-      {title: 'Saldo', property: 'debt'}
+      {title: 'Saldo', property: 'debt'},
+      {title: 'Entrega', property: 'term'},
     ]
   }
 

@@ -26,9 +26,13 @@ export class HomeComponent {
     return routes.filter(r => r.title)
   }
 
-  logout(){
-    this._cookieService.delete('access_token')
-    this.router.navigate(['login'])
+  async logout(){
+    const logout = this._cookieService.delete('access_token', '/')
+    window.location.reload()
+  }
+
+  navigateToAdmin(){
+    this.router.navigate(['admin'])
   }
 
 }

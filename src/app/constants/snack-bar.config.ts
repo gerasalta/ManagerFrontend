@@ -3,5 +3,5 @@ import { MatSnackBarConfig } from "@angular/material/snack-bar";
 export const matSnackbarDefaultConfig: MatSnackBarConfig = {
     verticalPosition: 'bottom',
     horizontalPosition: 'center',
-    duration: 3500
+    duration: 2500
   };

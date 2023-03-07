@@ -9,6 +9,8 @@ import { MaterialModule } from './styles/material/material.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthModule } from './views/auth/auth.module';
+import { AdminModule } from './views/admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { CookieService } from 'ngx-cookie-service';
     MainModule,
     MaterialModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    AuthModule,
+    AdminModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

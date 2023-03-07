@@ -35,6 +35,7 @@ export class TableComponent {
 
   ngOnChanges() {
     this.getClients()
+    this.setOrdersDate()
   }
 
   getColumnsTitles() {
@@ -64,6 +65,14 @@ export class TableComponent {
 
   getElementId(element: any){
     this.elementId = element._id
+  }
+
+  setOrdersDate(){
+    let index = 0
+    this.dataSource.forEach(r => {
+      this.dataSource[index].term = new Date(r.term).toLocaleDateString('es-MX', { month: '2-digit', day: '2-digit'});
+      index++
+    })
   }
 
 }
