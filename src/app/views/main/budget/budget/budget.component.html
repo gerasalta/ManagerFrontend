@@ -8,6 +8,7 @@
         <ng-container formArrayName="items">
             <div class="items-container" *ngFor="let item of arrayItems.controls; let i = index" [formGroupName]="i">
                 <div class="header">
+                    <button id="delete-button" type="button" (click)="deleteItem(i)" [disabled]="arrayItems.length <= 1" ><i class="fa-solid fa-trash"></i></button>
                     <mat-form-field appearance="fill" class="item">
                         <mat-label>Item</mat-label>
                         <input matInput placeholder="Item" formControlName="item">
@@ -28,13 +29,13 @@
                     </mat-form-field>
                 </div>
             </div>
+            <div class="add-btn-container">
+                <button mat-icon-button color="primary" type="button" (click)="addItem()"><i class="fa-solid fa-plus"></i></button>
+            </div>
         </ng-container>
-        <div class="add-btn-container">
-            <button mat-icon-button color="primary" type="button" (click)="addItem()"><i class="fa-solid fa-plus"></i></button>
-        </div>
-        <div class="btn-container">
-            <button mat-flat-button color="primary" class="download-btn" (click)="downloadFile()">Descargar</button>
-            <button mat-flat-button color="warn" class="download-btn" (click)="clearForm()">Limpiar</button>
-        </div>
+    </div>
+    <div class="btn-container">
+        <button mat-flat-button color="primary" class="download-btn" (click)="downloadFile()" [disabled]="!budgetForm.valid">Descargar</button>
+        <button mat-flat-button color="warn" class="download-btn" (click)="clearForm()" [disabled]="!budgetForm.dirty">Limpiar</button>
     </div>
 </div>

@@ -44,4 +44,8 @@ export class BudgetComponent {
     this.budgetForm.reset()
   }
 
+  deleteItem(index: number){
+    this.arrayItems.removeAt(index)
+  }
+
 }
