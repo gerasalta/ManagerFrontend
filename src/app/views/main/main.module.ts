@@ -18,6 +18,7 @@ import { TasksComponent } from './tasks/tasks/tasks.component';
 import { NewTaskDialogComponent } from './tasks/new-task-dialog/new-task-dialog.component';
 import { ReAssignTaskDialogComponent } from './tasks/re-assign-task-dialog/re-assign-task-dialog.component';
 import { AuthModule } from '../auth/auth.module';
+import { BudgetComponent } from './budget/budget/budget.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AuthModule } from '../auth/auth.module';
     PaymentDialogComponent,
     TasksComponent,
     NewTaskDialogComponent,
-    ReAssignTaskDialogComponent
+    ReAssignTaskDialogComponent,
+    BudgetComponent
   ],
   imports: [
     CommonModule,

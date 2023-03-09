@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="budget-container" [formGroup]="budgetForm">
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Cliente</mat-label>
+            <input matInput placeholder="Nombre / Empresa" formControlName="client">
+            <mat-error  *ngIf="budgetForm.get('client').hasError('required')">Campo obligatorio</mat-error>
+        </mat-form-field>
+        <ng-container formArrayName="items">
+            <div class="items-container" *ngFor="let item of arrayItems.controls; let i = index" [formGroupName]="i">
+                <div class="header">
+                    <mat-form-field appearance="fill" class="item">
+                        <mat-label>Item</mat-label>
+                        <input matInput placeholder="Item" formControlName="item">
+                        <mat-error  *ngIf="item.get('item').hasError('required')">Campo obligatorio</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="price">
+                        <mat-label>Precio</mat-label>
+                        <span matTextPrefix *ngIf="item.get('price').value" >$</span>
+                        <input matInput placeholder="Precio" formControlName="price" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)">
+                        <mat-error  *ngIf="item.get('price').hasError('required')">Campo obligatorio</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="description">
+                    <mat-form-field appearance="fill" class="text-area">
+                        <mat-label>Descripción</mat-label>
+                        <textarea matInput placeholder="Descripción" formControlName="description"></textarea>
+                        <mat-error  *ngIf="item.get('description').hasError('required')">Campo obligatorio</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </ng-container>
+        <div class="add-btn-container">
+            <button mat-icon-button color="primary" type="button" (click)="addItem()"><i class="fa-solid fa-plus"></i></button>
+        </div>
+        <div class="btn-container">
+            <button mat-flat-button color="primary" class="download-btn" (click)="downloadFile()">Descargar</button>
+            <button mat-flat-button color="warn" class="download-btn" (click)="clearForm()">Limpiar</button>
+        </div>
+    </div>
+</div>
