@@ -3,6 +3,7 @@ import { AuthGuardGuard } from "../guards/authGuard/auth-guard.guard";
 import { AdminComponent } from "../views/admin/admin/admin.component";
 import { LoginComponent } from "../views/auth/login/login/login.component";
 import { BudgetComponent } from "../views/main/budget/budget/budget.component";
+import { BugetModelComponent } from "../views/main/budget/buget-model/buget-model.component";
 import { ClientsComponent } from "../views/main/clients/clients/clients.component";
 import { DebtorsComponent } from "../views/main/debtors/debtors/debtors.component";
 import { HomeComponent } from "../views/main/home/home/home.component";
@@ -22,6 +23,7 @@ export const MAIN_ROUTES: Routes = [
         {title:'Deudores', path: 'debtors', component: DebtorsComponent},
         {title:'Tareas', path: 'tasks', component: TasksComponent},
         {title:'Presupuesto', path: 'budget', component: BudgetComponent},
+        {path: 'budget-model', component: BugetModelComponent},
         {path: 'orders/:id/new', component: NewOrderComponent},
         {path: 'orders/:id/view', component: OrdersDetailsComponent}
     ]},

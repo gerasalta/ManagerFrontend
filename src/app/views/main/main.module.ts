@@ -19,6 +19,7 @@ import { NewTaskDialogComponent } from './tasks/new-task-dialog/new-task-dialog.
 import { ReAssignTaskDialogComponent } from './tasks/re-assign-task-dialog/re-assign-task-dialog.component';
 import { AuthModule } from '../auth/auth.module';
 import { BudgetComponent } from './budget/budget/budget.component';
+import { BugetModelComponent } from './budget/buget-model/buget-model.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { BudgetComponent } from './budget/budget/budget.component';
     TasksComponent,
     NewTaskDialogComponent,
     ReAssignTaskDialogComponent,
-    BudgetComponent
+    BudgetComponent,
+    BugetModelComponent
   ],
   imports: [
     CommonModule,
