@@ -30,12 +30,12 @@
                 </div>
             </div>
             <div class="add-btn-container">
-                <button mat-icon-button color="primary" type="button" (click)="addItem()"><i class="fa-solid fa-plus"></i></button>
+                <button mat-icon-button color="primary" type="button" (click)="addItem()" [disabled]="!budgetForm.valid"><i class="fa-solid fa-plus"></i></button>
             </div>
         </ng-container>
     </div>
     <div class="btn-container">
-        <button mat-flat-button color="primary" class="download-btn" (click)="downloadFile()" [disabled]="!budgetForm.valid">Descargar</button>
+        <button mat-flat-button color="primary" class="download-btn" (click)="openPreview()" [disabled]="!budgetForm.valid">Vista Previa</button>
         <button mat-flat-button color="warn" class="download-btn" (click)="clearForm()" [disabled]="!budgetForm.dirty">Limpiar</button>
     </div>
 </div>
