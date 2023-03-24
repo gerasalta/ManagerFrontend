@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Order } from 'src/app/interfaces/orders.base';
+import { Env } from 'src/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersService {
 
-  url: string = 'http://localhost:3000/api/v1'
+  url: string = Env.URL
 
   constructor(
     private http: HttpClient

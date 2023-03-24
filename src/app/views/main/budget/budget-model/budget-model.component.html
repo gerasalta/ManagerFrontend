@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="budget" #document id="document">
+        <div class="header">
+            <div class="info">
+                <h1>PRESUPUESTO</h1>
+                <h5>{{items.client}}</h5>
+            </div>
+            <div class="logo">
+                <img src="assets/img/fc png.png" alt="">
+                <p>{{setDate()}}</p>
+            </div>
+        </div>
+        <div class="items-container">
+            <p class="intro">Por medio de la presente nos dirigimos a usted/es con el motivo de responder a la solicitud de presupuesto correspondiente a... </p>
+            <div class="item" *ngFor="let item of items.items">
+                <div class="item-info">
+                    <p>{{item.item}}</p>
+                    <p>${{item.price}}</p>
+                </div>
+                <div class="item-description">
+                    <p>{{item.description}}</p>
+                </div>
+                <div class="divider"></div>
+            </div>
+        </div>
+        <div class="footer">
+            <p> Direccion: Buenos Aires 418</p>
+            <p> Telefono: 3875869648 </p>
+        </div>
+        <div class="expiration-date">
+            <p>Este presupuesto tendra validez hasta el día {{setExpirationDate()}}</p>
+        </div>
+    </div>
+    <div class="actions">
+        <button mat-flat-button (click)="downloadFile()">Descargar</button>
+    </div>
+</div>

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { BudgetModelComponent } from '../budget-model/budget-model.component';
 
 @Component({
   selector: 'app-budget',
@@ -16,7 +18,8 @@ export class BudgetComponent {
   public arrayItems = this.budgetForm.get('items') as FormArray
 
   constructor(
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    public _dialog: MatDialog
   ){}
 
   ngOnInit(){
@@ -36,8 +39,18 @@ export class BudgetComponent {
     form.push(this.createNewItemForm())
   }
 
-  downloadFile(){
-    console.log(this.budgetForm.value)
+  openPreview(){
+    const dialog = this._dialog.open(BudgetModelComponent, {
+      data: this.budgetForm.value,
+      disableClose: false
+      })
+
+    dialog.afterClosed()
+    .subscribe(r => {
+      if(r){
+        this.budgetForm.reset()
+      }
+    })
   }
 
   clearForm(){
