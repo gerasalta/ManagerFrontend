@@ -15,7 +15,7 @@ export class NewClientDialogComponent {
   public newClient: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required, Validators.minLength(10)]),
+    phone: new FormControl('', [Validators.required, Validators.minLength(10), Validators.pattern('[0-9-]+$')]),
     address: new FormControl(),
     company: new FormControl(),
   })

@@ -1,15 +1,23 @@
-# STAGE 1
+# ----------------------------
+# build from source
+# ----------------------------
+FROM node:18 AS build
 
-FROM node:16.17 as build
-WORKDIR /dist/src/app
-COPY package*.json ./
-RUN npm ci
+WORKDIR /app
+
+COPY package*.json .
+RUN npm install
+
 COPY . .
 RUN npm run build
 
-# STAGE 2
+# ----------------------------
+# run with nginx
+# ----------------------------
+FROM nginx
 
-FROM nginx:alpine
-COPY /nginx.conf  /etc/nginx/conf.d/default.conf
-COPY --from=build /dist/src/app/frontend /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d
+COPY --from=build /app/dist/frontend /usr/share/nginx/html
+
 EXPOSE 80

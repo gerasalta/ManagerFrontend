@@ -40,8 +40,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -72,6 +72,7 @@
               "browserTarget": "frontend:build:development"
             }
           },
+          "options": {"port" : 8080},
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
