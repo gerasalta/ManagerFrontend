@@ -9,11 +9,12 @@ mat-sidenav-container{
 
 mat-sidenav{
     padding: 1vw;
+    padding-inline: 0px;
     width: 20vw;
 }
 
 mat-list-item button{
-    width: 13vw;
+    width: 22vw;
 }
 
 mat-list-item{
@@ -33,4 +34,8 @@ mat-list-item{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.background{
+    background-color: white;
 }

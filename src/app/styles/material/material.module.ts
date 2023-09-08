@@ -19,7 +19,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
-import { dialogGlobalConfig } from 'src/app/constants/dialog.config';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [],
@@ -43,7 +43,8 @@ import { dialogGlobalConfig } from 'src/app/constants/dialog.config';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
+    MatButtonToggleModule
   ],
   exports:[
     MatSlideToggleModule,
@@ -64,7 +65,8 @@ import { dialogGlobalConfig } from 'src/app/constants/dialog.config';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
+    MatButtonToggleModule
   ]
 
 })

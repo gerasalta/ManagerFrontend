@@ -14,11 +14,11 @@
     <mat-sidenav mode="side" opened>
         <mat-list role="list">
             <mat-list-item *ngFor="let route of routes; let i" role="listitem">
-                <button class="side-nav-button" mat-flat-button color="primary" [routerLink]="route.path">{{route.title}}</button>
+                <button mat-flat-button [color]="route.path === currentUrl ? 'primary' : 'none' " [routerLink]="route.path" (click)="setButtonColor(i)">{{route.title}}</button>
             </mat-list-item>
         </mat-list>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content class="background">
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

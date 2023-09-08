@@ -1,13 +1,30 @@
 .container{
-    height: 92.7vh;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+    background-color: rgb(40, 102, 196);
     display: flex;
-    justify-content: center;
-    align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .card{
     max-width: 350px;
     padding: 1vw;
+}
+
+.backgroundImg{
+	opacity: 15%;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	min-height: 100vh;
+	width: 100vw;
+	object-fit: cover;
+	mix-blend-mode: luminosity;
 }
 
 mat-card-header{
@@ -30,6 +47,7 @@ mat-card-actions{
 
 mat-form-field {
     margin: 0px;
+    margin-bottom: 10px;
     width: 100%;
 }
 
