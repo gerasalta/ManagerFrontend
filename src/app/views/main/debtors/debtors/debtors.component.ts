@@ -55,9 +55,9 @@ export class DebtorsComponent {
 
   setColumns(){
     return this.columnData = [
-      {title: 'Nombre', property: 'fullName'},
+      {title: 'Nombre', property: 'fullName', mobile: true},
       {title: 'Empresa', property: 'company'},
-      {title: 'Deuda', property: 'debt'}
+      {title: 'Deuda', property: 'debt', mobile: true}
     ]
   }
 

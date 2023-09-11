@@ -23,6 +23,7 @@ export class TableComponent {
   public pageEvent;
   public pageSize = PAGINTATOR_DEFAULT.pageSize
   public elementId: string;
+  public mobile = this.getSizeWidth()
 
   constructor(
     public _dialog: MatDialog
@@ -47,17 +48,20 @@ export class TableComponent {
   }
   
   getColumn() {
+    if(this.mobile){
+    this.columnData =  this.columnData.filter(r => r.mobile)
+    }
     this.displayedColumns = this.columnData
   }
 
-  getPage(event?: PageEvent) {
+  getPage(event?: PageEvent) {  
     event.pageIndex += 1
     this.pageIndexEvent.emit(event)
   }
 
   addActionsButtons(){
     if(this.actionsButtons && this.actionsButtons.length){
-      this.columnData.push({title: 'Acciones', property: null})
+      this.columnData.push({title: 'Acciones', property: null, mobile: true})
     }else{
       return
     }
@@ -73,6 +77,10 @@ export class TableComponent {
       this.dataSource[index].term = new Date(r.term).toLocaleDateString('es-MX', { month: '2-digit', day: '2-digit'});
       index++
     })
+  }
+
+  getSizeWidth(){
+    return window.innerWidth < 950 ? true : false
   }
 
 }

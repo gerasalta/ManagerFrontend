@@ -53,11 +53,11 @@ export class ClientsComponent {
 
   setColumns(){
     return this.columnData = [
-      {title: 'Nombre', property: 'name'},
-      {title: 'Apellido', property: 'lastName'},
-      {title: 'Direccion', property: 'address'},
-      {title: 'Telefono', property: 'phone'},
-      {title: 'Empresa', property: 'company'}
+      {title: 'Nombre', property: 'name', mobile: true},
+      {title: 'Apellido', property: 'lastName', mobile: true},
+      {title: 'Direccion', property: 'address', mobile: false},
+      {title: 'Telefono', property: 'phone', mobile: false},
+      {title: 'Empresa', property: 'company', mobile: false}
     ]
   }
 

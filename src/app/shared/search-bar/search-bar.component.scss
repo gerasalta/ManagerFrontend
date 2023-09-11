@@ -7,8 +7,9 @@
 }
 
 mat-form-field{
-    width: 50%;
+    min-width: 50%;
 }
+
 
 .mat-icon{
     display: flex;
@@ -40,3 +41,9 @@ mat-form-field{
 .search-btn{
     margin-inline: 0.3vw;
 }
+
+@media (max-width: 600px) {
+    mat-form-field {
+      width: 90%;
+    }
+  }

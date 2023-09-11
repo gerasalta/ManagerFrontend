@@ -50,8 +50,8 @@ export class TasksComponent {
   setColumns(){
     return this.columnData = [
       {title: 'Tarea', property: 'description'},
-      {title: 'Referencia', property: 'reference'},
-      {title: 'Gestor', property: 'manager'}
+      {title: 'Referencia', property: 'reference', mobile: true},
+      {title: 'Gestor', property: 'manager', mobile: true}
     ]
   }
 

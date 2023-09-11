@@ -8,7 +8,6 @@ mat-sidenav-container{
 }
 
 mat-sidenav{
-    padding: 1vw;
     padding-inline: 0px;
     width: 18vw;
 }
@@ -20,6 +19,10 @@ mat-list-item button{
 mat-list-item{
     display: flex;
     flex-direction: column;
+}
+
+.mdc-list{
+    padding: 0px;
 }
 
 .fa-solid{

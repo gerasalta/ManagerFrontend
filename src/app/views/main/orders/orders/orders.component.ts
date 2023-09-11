@@ -46,9 +46,9 @@ export class OrdersComponent {
 
   setColumns(){
     return this.columnData = [
-      {title: 'Cliente', property: 'fullName'},
+      {title: 'Cliente', property: 'fullName', mobile: true},
       {title: 'Empresa', property: 'company'},
-      {title: 'Gestor', property: 'managerName'},
+      {title: 'Gestor', property: 'managerName', mobile: true},
       {title: 'Saldo', property: 'debt'},
       {title: 'Entrega', property: 'term'},
     ]
