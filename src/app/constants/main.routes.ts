@@ -17,11 +17,11 @@ export const MAIN_ROUTES: Routes = [
     component: HomeComponent,
     canActivate: [AuthGuardGuard],
     children:[
-        {title:'Clientes', path: 'clients', component: ClientsComponent},
-        {title:'Pedidos', path: 'orders', component: OrdersComponent},
-        {title:'Deudores', path: 'debtors', component: DebtorsComponent},
-        {title:'Tareas', path: 'tasks', component: TasksComponent},
-        {title:'Presupuesto', path: 'budget', component: BudgetComponent},
+        {title:'Clientes', path: 'clients', component: ClientsComponent, data: {icon: 'fa-solid fa-briefcase'}},
+        {title:'Pedidos', path: 'orders', component: OrdersComponent, data: {icon: 'fa-solid fa-box'}},
+        {title:'Deudores', path: 'debtors', component: DebtorsComponent, data: {icon: 'fa-solid fa-money-bill-wave'}},
+        {title:'Tareas', path: 'tasks', component: TasksComponent, data: {icon: 'fa-solid fa-helmet-safety'}},
+        {title:'Presupuesto', path: 'budget', component: BudgetComponent, data: {icon: 'fa-solid fa-file'}},
         {path: 'orders/:id/new', component: NewOrderComponent},
         {path: 'orders/:id/view', component: OrdersDetailsComponent}
     ]},

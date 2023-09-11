@@ -12,12 +12,12 @@ import { MAIN_ROUTES } from 'src/app/constants/main.routes';
 export class HomeComponent {
 
   public routes = this.setRoutes()
-  public currentUrl = 'orders'
 
   constructor(
     public _cookieService: CookieService,
     public router: Router
   ){}
+  
 
   ngOnInit(){
   }
@@ -34,10 +34,6 @@ export class HomeComponent {
 
   navigateToAdmin(){
     this.router.navigate(['admin'])
-  }
-
-  setButtonColor(i: any){
-    this.currentUrl = i.path
   }
 
 }
