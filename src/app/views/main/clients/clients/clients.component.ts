@@ -27,6 +27,7 @@ export class ClientsComponent {
   public searchButtons: ActionButtons[] = [];
   public totalDocs: number = 10;
   public pageSize = PAGINTATOR_DEFAULT.pageSize
+  public mobileDialog = ''
 
   constructor(
     public _dialog: MatDialog,
@@ -40,6 +41,7 @@ export class ClientsComponent {
     this.getAllClients()
     this.setActionsButtons()
     this.setSearchButton()
+    this.getScreenSize()
   }
 
   getAllClients(keyword?: string, pageIndex?: number){
@@ -121,7 +123,7 @@ export class ClientsComponent {
   }
 
   showNewClientDialog = () =>{
-    const dialog = this._dialog.open(NewClientDialogComponent, {data: {title: 'Nuevo Cliente'}})
+    const dialog = this._dialog.open(NewClientDialogComponent, {data: {title: 'Nuevo Cliente'}, width: this.mobileDialog})
     dialog.afterClosed()
     .subscribe({
       next: r => {r ? this.createClient(r) : null}
@@ -144,6 +146,14 @@ export class ClientsComponent {
     this.searchButtons = [
       {name: 'Nuevo Cliente', fn: this.showNewClientDialog}
     ]
+  }
+
+  getScreenSize(){
+    if(window.innerWidth < 1000 ){
+      this.mobileDialog = '90%'
+    }else{
+      this.mobileDialog = ''
+    }
   }
 
 }

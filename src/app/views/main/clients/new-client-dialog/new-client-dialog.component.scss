@@ -10,11 +10,18 @@
     padding: 1.5vh;
 }
 
-.full-width{
-    margin: 0px;
-    width: 94.5%;
-}
-
 mat-form-field{
     margin-inline: 10px;
 }
+
+.full-width{ 
+    margin-inline: 0px;
+    width: 100%;
+}
+
+@media (max-width: 1000px) {
+    .row-input{
+        margin-inline: 0px;
+        width: 100%;
+    }
+  }

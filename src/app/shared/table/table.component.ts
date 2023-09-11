@@ -80,7 +80,7 @@ export class TableComponent {
   }
 
   getSizeWidth(){
-    return window.innerWidth < 950 ? true : false
+    return window.innerWidth < 1000 ? true : false
   }
 
 }

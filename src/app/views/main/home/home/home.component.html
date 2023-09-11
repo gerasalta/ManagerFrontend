@@ -1,15 +1,3 @@
-<mat-toolbar color="primary">
-    <span>Fc Manager</span>
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu"><i class="fa-solid fa-user"></i></button>
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item class="menu-btn" (click)="navigateToAdmin()" >
-            <i class="fa-solid fa-gear"></i>
-            <span>Configuración</span>
-        </button>
-        <button mat-menu-item class="menu-btn" (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i><span>Cerrar Sesión</span></button>
-    </mat-menu>
-</mat-toolbar>
-<app-loading></app-loading>
 <mat-sidenav-container class="example-container">
     <mat-sidenav mode="side" opened>
         <mat-list role="list">
@@ -19,9 +7,23 @@
                     <span>{{route.title}}</span>
                 </button>
             </mat-list-item>
+            <mat-list-item class="config-btn">
+                <button class="navside-btn" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Configuración</span>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="navigateToAdmin()">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Configuración</span>
+                    </button>
+                    <button mat-menu-item (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i><span>Cerrar Sesión</span></button>
+                </mat-menu>
+            </mat-list-item>
         </mat-list>
     </mat-sidenav>
     <mat-sidenav-content class="background">
+        <app-loading></app-loading>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
